@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -45,7 +46,7 @@ public class Sale implements Serializable
     private Integer saleQty;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "sale_price")
-    private Double salePrice;
+    private BigDecimal salePrice;
     @Column(name = "sale_date")
     @Temporal(TemporalType.DATE)
     private Date saleDate;
@@ -87,12 +88,12 @@ public class Sale implements Serializable
         this.saleQty = saleQty;
     }
 
-    public Double getSalePrice()
+    public BigDecimal getSalePrice()
     {
         return salePrice;
     }
 
-    public void setSalePrice(Double salePrice)
+    public void setSalePrice(BigDecimal salePrice)
     {
         this.salePrice = salePrice;
     }
