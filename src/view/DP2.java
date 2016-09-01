@@ -8,8 +8,10 @@ package view;
 import control.InventoryJpaController;
 import control.ProductJpaController;
 import control.SaleJpaController;
+import entity.Inventory;
 import entity.Product;
 import entity.Sale;
+import entity.SalePK;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -564,74 +566,78 @@ public class DP2 extends javax.swing.JFrame {
 
     private void btnAddSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSaleActionPerformed
         
-//        String txtSaleID = txtAddSaleId.getText();
-//        String txtProdID = txtAddProductId.getText();
-//        String txtQty = txtAddSaleQty.getText();
-//        String txtPrice = txtAddSalePrice.getText();
-//        String txtDate = txtAddSaleDate.getText();
-//        Date saleDate = null;
-//        
-//        //check empty fields
-//        if (this.isEmpty(lblAddSaleId.getText(), txtSaleID))
-//            return;
-//        if (this.isEmpty(lblAddProductId.getText(), txtProdID))
-//            return;
-//        if (this.isEmpty(lblAddSaleQty.getText(), txtQty))
-//            return;
-//        if (this.isEmpty(lblAddSalePrice.getText(), txtPrice))
-//            return;
-//        if (this.isEmpty(lblAddSaleDate.getText(), txtDate))
-//            return;
-//        
-//        //check parsing number
-//        if (!this.isLong(txtSaleID)) {
-//            this.showError("Invalid Sale ID");
-//            return;
-//        }
-//        if (!this.isInteger(txtProdID)) {
-//            this.showError("Invalid Product ID");
-//            return;
-//        }
-//        if (!this.isInteger(txtQty)) {
-//            this.showError("Invalid Sale Quantity");
-//            return;
-//        }
-//        if (!this.isDouble(txtPrice)) {
-//            this.showError("Invalid Sale Price");
-//            return;
-//        }
-//        
-//        //check parsing date
-//        if (!this.isDateString(txtDate)) {
-//            this.showError("Invalid Sale Date");
-//            return;
-//        }
-//        
-//        long saleID = Long.parseLong(txtSaleID);
-//        int prodID = Integer.parseInt(txtProdID);
-//        int qty = Integer.parseInt(txtQty);
-//        double cost = Double.parseDouble(txtPrice);
-//        try {
-//            saleDate = this.formatStrToDate(txtDate);
-//        } catch (ParseException ex) {
-//            Logger.getLogger(DP2.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        String txtSaleID = txtAddSaleId.getText();
+        String txtProdID = txtAddProductId.getText();
+        String txtQty = txtAddSaleQty.getText();
+        String txtPrice = txtAddSalePrice.getText();
+        String txtDate = txtAddSaleDate.getText();
+        Date saleDate = null;
         
+        //check empty fields
+        if (this.isEmpty(lblAddSaleId.getText(), txtSaleID))
+            return;
+        if (this.isEmpty(lblAddProductId.getText(), txtProdID))
+            return;
+        if (this.isEmpty(lblAddSaleQty.getText(), txtQty))
+            return;
+        if (this.isEmpty(lblAddSalePrice.getText(), txtPrice))
+            return;
+        if (this.isEmpty(lblAddSaleDate.getText(), txtDate))
+            return;
         
-            
-//        Sale sale = new Sale(saleID, prodID);
-//        sale.setSaleQty(qty);
-//        sale.setSalePrice(cost);
-//        sale.setSaleDate(saleDate);
-//        try {
-//            saleController.create(sale);
-//            this.showMessage("Sale Record Added");
-//        } catch (Exception ex) {
-//            Logger.getLogger(DP2.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        //check parsing number
+        if (!this.isLong(txtSaleID)) {
+            this.showError("Invalid Sale ID");
+            return;
+        }
+        if (!this.isInteger(txtProdID)) {
+            this.showError("Invalid Product ID");
+            return;
+        }
+        if (!this.isInteger(txtQty)) {
+            this.showError("Invalid Sale Quantity");
+            return;
+        }
+        if (!this.isDouble(txtPrice)) {
+            this.showError("Invalid Sale Price");
+            return;
+        }
         
+        //check parsing date
+        if (!this.isDateString(txtDate)) {
+            this.showError("Invalid Sale Date");
+            return;
+        }
         
+        long saleID = Long.parseLong(txtSaleID);
+        int prodID = Integer.parseInt(txtProdID);
+        int qty = Integer.parseInt(txtQty);
+        double price = Double.parseDouble(txtPrice);
+        Product p = productController.findProduct(prodID);
+        if (p == null) {
+            this.showError("Invalid Product ID");
+            return;
+        }
         
+        try {
+            saleDate = this.formatStrToDate(txtDate);
+        } catch (ParseException ex) {
+            Logger.getLogger(DP2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        Sale sale = new Sale(saleID, prodID);
+        sale.setSaleQty(qty);
+        sale.setSalePrice(new BigDecimal(price));
+        sale.setSaleDate(saleDate);
+        sale.setProduct(p);
+        try {
+            saleController.create(sale);
+            this.showMessage("Sale Record Added");
+        } catch (Exception ex) {
+            Logger.getLogger(DP2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+
     }//GEN-LAST:event_btnAddSaleActionPerformed
     
     private boolean isDateString(String s) {
