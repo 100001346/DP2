@@ -18,6 +18,7 @@ import entity.SalePK;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.xml.transform.OutputKeys;
 
 /**
  *
@@ -43,7 +44,7 @@ public class SaleJpaController implements Serializable
         {
             sale.setSalePK(new SalePK());
         }
-        sale.getSalePK().setProdId(sale.getProduct().getProdId());
+//        sale.getSalePK().setProdId(sale.getProduct().getProdId());
         EntityManager em = null;
         try
         {
