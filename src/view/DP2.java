@@ -30,6 +30,8 @@ public class DP2 extends javax.swing.JFrame {
         emf = Persistence.createEntityManagerFactory("DP2PU");
         saleSearchPanel.setVisible(false);
         allSalePanel.setVisible(false);
+        addSalePanel.setVisible(false);
+        this.pack();
     }
 
     /**
