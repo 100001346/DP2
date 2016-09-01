@@ -7,6 +7,7 @@ package view;
 
 import control.SaleJpaController;
 import entity.Sale;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -516,7 +517,7 @@ public class DP2 extends javax.swing.JFrame {
 
     private void btnAddSaleRecodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSaleRecodActionPerformed
         addSalePanel.setVisible(true);
-        mainPanel.setVisible(false);
+        mainPanel.setVisible(false);     
     }//GEN-LAST:event_btnAddSaleRecodActionPerformed
 
     private void btnCancelSaveSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelSaveSaleActionPerformed
