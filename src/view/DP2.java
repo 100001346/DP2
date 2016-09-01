@@ -57,6 +57,7 @@ public class DP2 extends javax.swing.JFrame {
         GetAllSales = new javax.swing.JButton();
         allSalePanel = new javax.swing.JPanel();
         allSaleScrollPane = new javax.swing.JScrollPane();
+        allSaleBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -169,21 +170,36 @@ public class DP2 extends javax.swing.JFrame {
                 .addContainerGap(43, Short.MAX_VALUE))
         );
 
+        allSaleBack.setText("Back");
+        allSaleBack.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                allSaleBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout allSalePanelLayout = new javax.swing.GroupLayout(allSalePanel);
         allSalePanel.setLayout(allSalePanelLayout);
         allSalePanelLayout.setHorizontalGroup(
             allSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(allSalePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(allSaleScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+                .addComponent(allSaleScrollPane)
                 .addContainerGap())
+            .addGroup(allSalePanelLayout.createSequentialGroup()
+                .addGap(167, 167, 167)
+                .addComponent(allSaleBack)
+                .addContainerGap(186, Short.MAX_VALUE))
         );
         allSalePanelLayout.setVerticalGroup(
             allSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(allSalePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(allSaleScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(allSaleScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(allSaleBack)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -200,7 +216,7 @@ public class DP2 extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(57, 57, 57)
                         .addComponent(allSalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(200, Short.MAX_VALUE))
+                .addContainerGap(218, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,8 +226,8 @@ public class DP2 extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45)
-                .addComponent(allSalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addComponent(allSalePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -244,6 +260,13 @@ public class DP2 extends javax.swing.JFrame {
         JTable allSaleTable = new JTable(data.toArray(new Object[][]{}), columnNames);
         allSaleScrollPane.getViewport().add(allSaleTable);
     }//GEN-LAST:event_GetAllSalesActionPerformed
+
+    private void allSaleBackActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_allSaleBackActionPerformed
+    {//GEN-HEADEREND:event_allSaleBackActionPerformed
+        // TODO add your handling code here:
+        MainPanel.setVisible(true);
+        allSalePanel.setVisible(false);
+    }//GEN-LAST:event_allSaleBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -288,6 +311,7 @@ public class DP2 extends javax.swing.JFrame {
     private javax.swing.JButton GetAllSales;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JPanel SaleSearchPanel;
+    private javax.swing.JButton allSaleBack;
     private javax.swing.JPanel allSalePanel;
     private javax.swing.JScrollPane allSaleScrollPane;
     private javax.swing.JButton btnAddSaleRecod;
