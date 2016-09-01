@@ -5,12 +5,19 @@
  */
 package view;
 
+import control.InventoryJpaController;
+import control.ProductJpaController;
 import control.SaleJpaController;
+import entity.Product;
 import entity.Sale;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
@@ -26,10 +33,17 @@ public class DP2 extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     private EntityManagerFactory emf;
+    private SaleJpaController saleController;
+    private InventoryJpaController inventoryController;
+    private ProductJpaController productController;
+    private static final String DATE_FORMAT = "dd/MM/yyyy";
     
     public DP2() {
         initComponents();
         emf = Persistence.createEntityManagerFactory("DP2PU");
+        saleController = new SaleJpaController(emf);
+        productController = new ProductJpaController(emf);
+        inventoryController = new InventoryJpaController(emf);
         saleSearchPanel.setVisible(false);
         allSalePanel.setVisible(false);
         addSalePanel.setVisible(false);
@@ -68,30 +82,30 @@ public class DP2 extends javax.swing.JFrame {
         txtAddSaleId = new javax.swing.JTextField();
         txtAddProductId = new javax.swing.JTextField();
         txtAddSaleQty = new javax.swing.JTextField();
-        txtAddSaleCost = new javax.swing.JTextField();
+        txtAddSalePrice = new javax.swing.JTextField();
         txtAddSaleDate = new javax.swing.JTextField();
         btnAddSale = new javax.swing.JButton();
         btnAddSaleClear = new javax.swing.JButton();
         btnAddSaleBack = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        lblAddSaleId = new javax.swing.JLabel();
+        lblAddProductId = new javax.swing.JLabel();
+        lblAddSaleQty = new javax.swing.JLabel();
+        lblAddSalePrice = new javax.swing.JLabel();
+        lblAddSaleDate = new javax.swing.JLabel();
         displaySalePanel = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         txtDisplaySaleId = new javax.swing.JTextField();
         txtDisplayProductId = new javax.swing.JTextField();
         txtDisplaySaleQty = new javax.swing.JTextField();
-        txtDisplaySaleCost = new javax.swing.JTextField();
+        txtDisplaySalePrice = new javax.swing.JTextField();
         txtDisplaySaleDate = new javax.swing.JTextField();
         btnEditSaveSale = new javax.swing.JButton();
         btnCancelSaveSale = new javax.swing.JButton();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
+        lblEditSaleId = new javax.swing.JLabel();
+        lblEditProductId = new javax.swing.JLabel();
+        lblEditSaleQty = new javax.swing.JLabel();
+        lblEditSalePrice = new javax.swing.JLabel();
+        lblEditSaleDate = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -268,15 +282,15 @@ public class DP2 extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setText("Sale ID");
+        lblAddSaleId.setText("Sale ID");
 
-        jLabel9.setText("Product ID");
+        lblAddProductId.setText("Product ID");
 
-        jLabel10.setText("Qty");
+        lblAddSaleQty.setText("Qty");
 
-        jLabel11.setText("Cost");
+        lblAddSalePrice.setText("Price");
 
-        jLabel12.setText("Date");
+        lblAddSaleDate.setText("Date");
 
         javax.swing.GroupLayout addSalePanelLayout = new javax.swing.GroupLayout(addSalePanel);
         addSalePanel.setLayout(addSalePanelLayout);
@@ -285,11 +299,11 @@ public class DP2 extends javax.swing.JFrame {
             .addGroup(addSalePanelLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(addSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel12)
+                    .addComponent(lblAddSaleId)
+                    .addComponent(lblAddProductId)
+                    .addComponent(lblAddSaleQty)
+                    .addComponent(lblAddSalePrice)
+                    .addComponent(lblAddSaleDate)
                     .addComponent(btnAddSale))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(addSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -301,7 +315,7 @@ public class DP2 extends javax.swing.JFrame {
                     .addComponent(txtAddSaleId)
                     .addComponent(txtAddProductId)
                     .addComponent(txtAddSaleQty)
-                    .addComponent(txtAddSaleCost)
+                    .addComponent(txtAddSalePrice)
                     .addComponent(txtAddSaleDate))
                 .addContainerGap(60, Short.MAX_VALUE))
         );
@@ -313,23 +327,23 @@ public class DP2 extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(addSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtAddSaleId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
+                    .addComponent(lblAddSaleId))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(addSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtAddProductId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
+                    .addComponent(lblAddProductId))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(addSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtAddSaleQty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
+                    .addComponent(lblAddSaleQty))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(addSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtAddSaleCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
+                    .addComponent(txtAddSalePrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblAddSalePrice))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(addSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtAddSaleDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
+                    .addComponent(lblAddSaleDate))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(addSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddSale)
@@ -346,7 +360,7 @@ public class DP2 extends javax.swing.JFrame {
 
         txtDisplaySaleQty.setEditable(false);
 
-        txtDisplaySaleCost.setEditable(false);
+        txtDisplaySalePrice.setEditable(false);
 
         txtDisplaySaleDate.setEditable(false);
 
@@ -364,15 +378,15 @@ public class DP2 extends javax.swing.JFrame {
             }
         });
 
-        jLabel14.setText("Sale ID");
+        lblEditSaleId.setText("Sale ID");
 
-        jLabel15.setText("Product ID");
+        lblEditProductId.setText("Product ID");
 
-        jLabel16.setText("Qty");
+        lblEditSaleQty.setText("Qty");
 
-        jLabel17.setText("Cost");
+        lblEditSalePrice.setText("Price");
 
-        jLabel18.setText("Date");
+        lblEditSaleDate.setText("Date");
 
         javax.swing.GroupLayout displaySalePanelLayout = new javax.swing.GroupLayout(displaySalePanel);
         displaySalePanel.setLayout(displaySalePanelLayout);
@@ -381,11 +395,11 @@ public class DP2 extends javax.swing.JFrame {
             .addGroup(displaySalePanelLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel15)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel17)
-                    .addComponent(jLabel18))
+                    .addComponent(lblEditSaleId)
+                    .addComponent(lblEditProductId)
+                    .addComponent(lblEditSaleQty)
+                    .addComponent(lblEditSalePrice)
+                    .addComponent(lblEditSaleDate))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -393,7 +407,7 @@ public class DP2 extends javax.swing.JFrame {
                         .addComponent(txtDisplaySaleId, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
                         .addComponent(txtDisplayProductId)
                         .addComponent(txtDisplaySaleQty)
-                        .addComponent(txtDisplaySaleCost)
+                        .addComponent(txtDisplaySalePrice)
                         .addComponent(txtDisplaySaleDate))
                     .addGroup(displaySalePanelLayout.createSequentialGroup()
                         .addComponent(btnEditSaveSale)
@@ -409,23 +423,23 @@ public class DP2 extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDisplaySaleId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14))
+                    .addComponent(lblEditSaleId))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDisplayProductId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15))
+                    .addComponent(lblEditProductId))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDisplaySaleQty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16))
+                    .addComponent(lblEditSaleQty))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDisplaySaleCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17))
+                    .addComponent(txtDisplaySalePrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEditSalePrice))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDisplaySaleDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel18))
+                    .addComponent(lblEditSaleDate))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditSaveSale)
@@ -481,7 +495,6 @@ public class DP2 extends javax.swing.JFrame {
         // TODO add your handling code here:
         mainPanel.setVisible(false);
         allSalePanel.setVisible(true);
-        SaleJpaController saleController = new SaleJpaController(emf);
         List<Sale> results = saleController.findSaleEntities();
         List<String[]> data = new ArrayList<>();
         String[] columnNames = {"Sales ID", "Product ID", "Qty", "Cost", "SaleDate"};
@@ -523,7 +536,7 @@ public class DP2 extends javax.swing.JFrame {
 
     private void btnAddSaleRecodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSaleRecodActionPerformed
         addSalePanel.setVisible(true);
-        mainPanel.setVisible(false);     
+        mainPanel.setVisible(false);
     }//GEN-LAST:event_btnAddSaleRecodActionPerformed
 
     private void btnCancelSaveSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelSaveSaleActionPerformed
@@ -533,7 +546,7 @@ public class DP2 extends javax.swing.JFrame {
         txtDisplaySaleId.setEditable(false);
         txtDisplayProductId.setEditable(false);
         txtDisplaySaleQty.setEditable(false);
-        txtDisplaySaleCost.setEditable(false);
+        txtDisplaySalePrice.setEditable(false);
         txtDisplaySaleDate.setEditable(false);
     }//GEN-LAST:event_btnCancelSaveSaleActionPerformed
 
@@ -544,18 +557,142 @@ public class DP2 extends javax.swing.JFrame {
             txtDisplaySaleId.setEditable(true);
             txtDisplayProductId.setEditable(true);
             txtDisplaySaleQty.setEditable(true);
-            txtDisplaySaleCost.setEditable(true);
+            txtDisplaySalePrice.setEditable(true);
             txtDisplaySaleDate.setEditable(true); 
         }
     }//GEN-LAST:event_btnEditSaveSaleActionPerformed
 
     private void btnAddSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSaleActionPerformed
         
+//        String txtSaleID = txtAddSaleId.getText();
+//        String txtProdID = txtAddProductId.getText();
+//        String txtQty = txtAddSaleQty.getText();
+//        String txtPrice = txtAddSalePrice.getText();
+//        String txtDate = txtAddSaleDate.getText();
+//        Date saleDate = null;
+//        
+//        //check empty fields
+//        if (this.isEmpty(lblAddSaleId.getText(), txtSaleID))
+//            return;
+//        if (this.isEmpty(lblAddProductId.getText(), txtProdID))
+//            return;
+//        if (this.isEmpty(lblAddSaleQty.getText(), txtQty))
+//            return;
+//        if (this.isEmpty(lblAddSalePrice.getText(), txtPrice))
+//            return;
+//        if (this.isEmpty(lblAddSaleDate.getText(), txtDate))
+//            return;
+//        
+//        //check parsing number
+//        if (!this.isLong(txtSaleID)) {
+//            this.showError("Invalid Sale ID");
+//            return;
+//        }
+//        if (!this.isInteger(txtProdID)) {
+//            this.showError("Invalid Product ID");
+//            return;
+//        }
+//        if (!this.isInteger(txtQty)) {
+//            this.showError("Invalid Sale Quantity");
+//            return;
+//        }
+//        if (!this.isDouble(txtPrice)) {
+//            this.showError("Invalid Sale Price");
+//            return;
+//        }
+//        
+//        //check parsing date
+//        if (!this.isDateString(txtDate)) {
+//            this.showError("Invalid Sale Date");
+//            return;
+//        }
+//        
+//        long saleID = Long.parseLong(txtSaleID);
+//        int prodID = Integer.parseInt(txtProdID);
+//        int qty = Integer.parseInt(txtQty);
+//        double cost = Double.parseDouble(txtPrice);
+//        try {
+//            saleDate = this.formatStrToDate(txtDate);
+//        } catch (ParseException ex) {
+//            Logger.getLogger(DP2.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        
+        
+            
+//        Sale sale = new Sale(saleID, prodID);
+//        sale.setSaleQty(qty);
+//        sale.setSalePrice(cost);
+//        sale.setSaleDate(saleDate);
+//        try {
+//            saleController.create(sale);
+//            this.showMessage("Sale Record Added");
+//        } catch (Exception ex) {
+//            Logger.getLogger(DP2.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        
+        
+        
     }//GEN-LAST:event_btnAddSaleActionPerformed
-
-    private int parseInt(String s) {
-        int i = Integer.parseInt(s);
-        return i;
+    
+    private boolean isDateString(String s) {
+        try {
+            Date d = this.formatStrToDate(s);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+    
+    private Date formatStrToDate(String s) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
+        Date result = formatter.parse(s);
+        return result;
+    }
+    
+    private boolean isInteger(String s) {
+        try {
+            int i = Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }  
+    }
+    
+    private boolean isLong(String s) {
+        try {
+            long n = Long.parseLong(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }  
+    }
+    
+    private boolean isDouble(String s) {
+        try {
+            double d = Double.parseDouble(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        
+    }
+    
+    private boolean isEmpty(String fieldname, String value) {
+        if (value.isEmpty()) {
+            this.showError(fieldname + " cannot be empty");
+            return true;
+        } else
+            return false;   
+    }
+    
+    private void showError(String msg) {
+        JOptionPane.showMessageDialog(rootPane, 
+                    msg, "ERROR", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    private void showMessage(String msg) {
+        JOptionPane.showMessageDialog(rootPane, 
+                    msg, null, JOptionPane.INFORMATION_MESSAGE);
     }
     
     /**
@@ -616,32 +753,32 @@ public class DP2 extends javax.swing.JFrame {
     private javax.swing.JButton btnSaleSearchPanel;
     private javax.swing.JButton btnWeeklyReport;
     private javax.swing.JPanel displaySalePanel;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel lblAddProductId;
+    private javax.swing.JLabel lblAddSaleDate;
+    private javax.swing.JLabel lblAddSaleId;
+    private javax.swing.JLabel lblAddSalePrice;
+    private javax.swing.JLabel lblAddSaleQty;
+    private javax.swing.JLabel lblEditProductId;
+    private javax.swing.JLabel lblEditSaleDate;
+    private javax.swing.JLabel lblEditSaleId;
+    private javax.swing.JLabel lblEditSalePrice;
+    private javax.swing.JLabel lblEditSaleQty;
     private javax.swing.JLabel lblMain;
     private javax.swing.JLabel lblSaleId;
     private javax.swing.JLabel lblSaleSearch;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel saleSearchPanel;
     private javax.swing.JTextField txtAddProductId;
-    private javax.swing.JTextField txtAddSaleCost;
     private javax.swing.JTextField txtAddSaleDate;
     private javax.swing.JTextField txtAddSaleId;
+    private javax.swing.JTextField txtAddSalePrice;
     private javax.swing.JTextField txtAddSaleQty;
     private javax.swing.JTextField txtDisplayProductId;
-    private javax.swing.JTextField txtDisplaySaleCost;
     private javax.swing.JTextField txtDisplaySaleDate;
     private javax.swing.JTextField txtDisplaySaleId;
+    private javax.swing.JTextField txtDisplaySalePrice;
     private javax.swing.JTextField txtDisplaySaleQty;
     private javax.swing.JTextField txtSaleSearch;
     // End of variables declaration//GEN-END:variables
