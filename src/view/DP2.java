@@ -28,7 +28,7 @@ public class DP2 extends javax.swing.JFrame {
     public DP2() {
         initComponents();
         emf = Persistence.createEntityManagerFactory("DP2PU");
-        SaleSearchPanel.setVisible(false);
+        saleSearchPanel.setVisible(false);
         allSalePanel.setVisible(false);
     }
 
@@ -39,16 +39,16 @@ public class DP2 extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
-        SaleSearchPanel = new javax.swing.JPanel();
+        saleSearchPanel = new javax.swing.JPanel();
         txtSaleSearch = new javax.swing.JTextField();
         btnSaleSearch = new javax.swing.JButton();
         lblSaleId = new javax.swing.JLabel();
         btnClearSaleSearch = new javax.swing.JButton();
         lblSaleSearch = new javax.swing.JLabel();
-        MainPanel = new javax.swing.JPanel();
+        btnSaleSearchBack = new javax.swing.JButton();
+        mainPanel = new javax.swing.JPanel();
         lblMain = new javax.swing.JLabel();
         btnAddSaleRecod = new javax.swing.JButton();
         btnMonthlyReport = new javax.swing.JButton();
@@ -58,10 +58,30 @@ public class DP2 extends javax.swing.JFrame {
         allSalePanel = new javax.swing.JPanel();
         allSaleScrollPane = new javax.swing.JScrollPane();
         allSaleBack = new javax.swing.JButton();
+        addSalePanel = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        txtAddSaleId = new javax.swing.JTextField();
+        txtAddProductId = new javax.swing.JTextField();
+        txtAddSaleQty = new javax.swing.JTextField();
+        txtAddSaleCost = new javax.swing.JTextField();
+        txtAddSaleDate = new javax.swing.JTextField();
+        btnAddSale = new javax.swing.JButton();
+        btnAddSaleClear = new javax.swing.JButton();
+        btnAddSaleBack = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnSaleSearch.setText("Search");
+        btnSaleSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaleSearchActionPerformed(evt);
+            }
+        });
 
         lblSaleId.setText("Sale ID");
 
@@ -69,36 +89,46 @@ public class DP2 extends javax.swing.JFrame {
 
         lblSaleSearch.setText("SALE RECORD SEARCH");
 
-        javax.swing.GroupLayout SaleSearchPanelLayout = new javax.swing.GroupLayout(SaleSearchPanel);
-        SaleSearchPanel.setLayout(SaleSearchPanelLayout);
-        SaleSearchPanelLayout.setHorizontalGroup(
-            SaleSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SaleSearchPanelLayout.createSequentialGroup()
+        btnSaleSearchBack.setText("Back");
+        btnSaleSearchBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaleSearchBackActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout saleSearchPanelLayout = new javax.swing.GroupLayout(saleSearchPanel);
+        saleSearchPanel.setLayout(saleSearchPanelLayout);
+        saleSearchPanelLayout.setHorizontalGroup(
+            saleSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, saleSearchPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblSaleId)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(SaleSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(saleSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblSaleSearch)
-                    .addGroup(SaleSearchPanelLayout.createSequentialGroup()
+                    .addComponent(txtSaleSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(saleSearchPanelLayout.createSequentialGroup()
                         .addComponent(btnSaleSearch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnClearSaleSearch))
-                    .addComponent(txtSaleSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(83, 83, 83))
+                        .addComponent(btnClearSaleSearch)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSaleSearchBack)))
+                .addGap(72, 72, 72))
         );
-        SaleSearchPanelLayout.setVerticalGroup(
-            SaleSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SaleSearchPanelLayout.createSequentialGroup()
+        saleSearchPanelLayout.setVerticalGroup(
+            saleSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(saleSearchPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblSaleSearch)
                 .addGap(23, 23, 23)
-                .addGroup(SaleSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(saleSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSaleSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblSaleId))
                 .addGap(18, 18, 18)
-                .addGroup(SaleSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(saleSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSaleSearch)
-                    .addComponent(btnClearSaleSearch))
+                    .addComponent(btnClearSaleSearch)
+                    .addComponent(btnSaleSearchBack))
                 .addContainerGap(109, Short.MAX_VALUE))
         );
 
@@ -111,58 +141,54 @@ public class DP2 extends javax.swing.JFrame {
         btnWeeklyReport.setText("Weekly Sales Report");
 
         btnSaleSearchPanel.setText("Sale Search");
-        btnSaleSearchPanel.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        btnSaleSearchPanel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaleSearchPanelActionPerformed(evt);
             }
         });
 
         GetAllSales.setText("Get All Sales");
-        GetAllSales.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        GetAllSales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GetAllSalesActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout MainPanelLayout = new javax.swing.GroupLayout(MainPanel);
-        MainPanel.setLayout(MainPanelLayout);
-        MainPanelLayout.setHorizontalGroup(
-            MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblMain)
                 .addGap(96, 96, 96))
-            .addGroup(MainPanelLayout.createSequentialGroup()
+            .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(MainPanelLayout.createSequentialGroup()
-                        .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnAddSaleRecod)
                             .addComponent(btnWeeklyReport))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnMonthlyReport)
                             .addComponent(btnSaleSearchPanel)))
-                    .addGroup(MainPanelLayout.createSequentialGroup()
+                    .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(GetAllSales)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        MainPanelLayout.setVerticalGroup(
-            MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(MainPanelLayout.createSequentialGroup()
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblMain)
                 .addGap(18, 18, 18)
-                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddSaleRecod)
                     .addComponent(btnMonthlyReport))
                 .addGap(18, 18, 18)
-                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnWeeklyReport)
                     .addComponent(btnSaleSearchPanel))
                 .addGap(18, 18, 18)
@@ -171,10 +197,8 @@ public class DP2 extends javax.swing.JFrame {
         );
 
         allSaleBack.setText("Back");
-        allSaleBack.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        allSaleBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 allSaleBackActionPerformed(evt);
             }
         });
@@ -202,6 +226,91 @@ public class DP2 extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel7.setText("ADD SALE RECORD");
+
+        btnAddSale.setText("Add");
+
+        btnAddSaleClear.setText("Clear");
+
+        btnAddSaleBack.setText("Back");
+        btnAddSaleBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddSaleBackActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Sale ID");
+
+        jLabel9.setText("Product ID");
+
+        jLabel10.setText("Qty");
+
+        jLabel11.setText("Cost");
+
+        jLabel12.setText("Date");
+
+        javax.swing.GroupLayout addSalePanelLayout = new javax.swing.GroupLayout(addSalePanel);
+        addSalePanel.setLayout(addSalePanelLayout);
+        addSalePanelLayout.setHorizontalGroup(
+            addSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addSalePanelLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(addSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel12)
+                    .addComponent(btnAddSale))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(addSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(addSalePanelLayout.createSequentialGroup()
+                        .addComponent(btnAddSaleClear)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAddSaleBack))
+                    .addGroup(addSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel7)
+                        .addGroup(addSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtAddSaleId)
+                            .addComponent(txtAddProductId)
+                            .addComponent(txtAddSaleQty)
+                            .addComponent(txtAddSaleCost)
+                            .addComponent(txtAddSaleDate, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE))))
+                .addContainerGap(40, Short.MAX_VALUE))
+        );
+        addSalePanelLayout.setVerticalGroup(
+            addSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addSalePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7)
+                .addGap(18, 18, 18)
+                .addGroup(addSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtAddSaleId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(addSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtAddProductId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(addSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtAddSaleQty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(addSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtAddSaleCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(addSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtAddSaleDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(addSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddSale)
+                    .addComponent(btnAddSaleClear)
+                    .addComponent(btnAddSaleBack))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -211,20 +320,24 @@ public class DP2 extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(SaleSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(saleSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(addSalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(57, 57, 57)
                         .addComponent(allSalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(218, Short.MAX_VALUE))
+                .addContainerGap(342, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(SaleSearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(addSalePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(saleSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(46, 46, 46)
-                .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45)
                 .addComponent(allSalePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -234,14 +347,14 @@ public class DP2 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSaleSearchPanelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaleSearchPanelActionPerformed
-        MainPanel.setVisible(false);
-        SaleSearchPanel.setVisible(true);
+        mainPanel.setVisible(false);
+        saleSearchPanel.setVisible(true);
     }//GEN-LAST:event_btnSaleSearchPanelActionPerformed
 
     private void GetAllSalesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_GetAllSalesActionPerformed
     {//GEN-HEADEREND:event_GetAllSalesActionPerformed
         // TODO add your handling code here:
-        MainPanel.setVisible(false);
+        mainPanel.setVisible(false);
         allSalePanel.setVisible(true);
         SaleJpaController saleController = new SaleJpaController(emf);
         List<Sale> results = saleController.findSaleEntities();
@@ -264,9 +377,24 @@ public class DP2 extends javax.swing.JFrame {
     private void allSaleBackActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_allSaleBackActionPerformed
     {//GEN-HEADEREND:event_allSaleBackActionPerformed
         // TODO add your handling code here:
-        MainPanel.setVisible(true);
+        mainPanel.setVisible(true);
         allSalePanel.setVisible(false);
     }//GEN-LAST:event_allSaleBackActionPerformed
+
+    private void btnSaleSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaleSearchActionPerformed
+        saleSearchPanel.setVisible(false);
+        addSalePanel.setVisible(true);
+    }//GEN-LAST:event_btnSaleSearchActionPerformed
+
+    private void btnSaleSearchBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaleSearchBackActionPerformed
+        mainPanel.setVisible(true);
+        saleSearchPanel.setVisible(false);
+    }//GEN-LAST:event_btnSaleSearchBackActionPerformed
+
+    private void btnAddSaleBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSaleBackActionPerformed
+        saleSearchPanel.setVisible(true);
+        addSalePanel.setVisible(false);
+    }//GEN-LAST:event_btnAddSaleBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -309,20 +437,36 @@ public class DP2 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton GetAllSales;
-    private javax.swing.JPanel MainPanel;
-    private javax.swing.JPanel SaleSearchPanel;
+    private javax.swing.JPanel addSalePanel;
     private javax.swing.JButton allSaleBack;
     private javax.swing.JPanel allSalePanel;
     private javax.swing.JScrollPane allSaleScrollPane;
+    private javax.swing.JButton btnAddSale;
+    private javax.swing.JButton btnAddSaleBack;
+    private javax.swing.JButton btnAddSaleClear;
     private javax.swing.JButton btnAddSaleRecod;
     private javax.swing.JButton btnClearSaleSearch;
     private javax.swing.JButton btnMonthlyReport;
     private javax.swing.JButton btnSaleSearch;
+    private javax.swing.JButton btnSaleSearchBack;
     private javax.swing.JButton btnSaleSearchPanel;
     private javax.swing.JButton btnWeeklyReport;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel lblMain;
     private javax.swing.JLabel lblSaleId;
     private javax.swing.JLabel lblSaleSearch;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JPanel saleSearchPanel;
+    private javax.swing.JTextField txtAddProductId;
+    private javax.swing.JTextField txtAddSaleCost;
+    private javax.swing.JTextField txtAddSaleDate;
+    private javax.swing.JTextField txtAddSaleId;
+    private javax.swing.JTextField txtAddSaleQty;
     private javax.swing.JTextField txtSaleSearch;
     // End of variables declaration//GEN-END:variables
 }
