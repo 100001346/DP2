@@ -5,6 +5,15 @@
  */
 package view;
 
+import control.SaleJpaController;
+import entity.Sale;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.swing.JTable;
+
 /**
  *
  * @author magic
@@ -14,9 +23,13 @@ public class DP2 extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
+    private EntityManagerFactory emf;
+    
     public DP2() {
         initComponents();
+        emf = Persistence.createEntityManagerFactory("DP2PU");
         SaleSearchPanel.setVisible(false);
+        allSalePanel.setVisible(false);
     }
 
     /**
@@ -26,7 +39,8 @@ public class DP2 extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         SaleSearchPanel = new javax.swing.JPanel();
         txtSaleSearch = new javax.swing.JTextField();
@@ -40,6 +54,9 @@ public class DP2 extends javax.swing.JFrame {
         btnMonthlyReport = new javax.swing.JButton();
         btnWeeklyReport = new javax.swing.JButton();
         btnSaleSearchPanel = new javax.swing.JButton();
+        GetAllSales = new javax.swing.JButton();
+        allSalePanel = new javax.swing.JPanel();
+        allSaleScrollPane = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,9 +110,20 @@ public class DP2 extends javax.swing.JFrame {
         btnWeeklyReport.setText("Weekly Sales Report");
 
         btnSaleSearchPanel.setText("Sale Search");
-        btnSaleSearchPanel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnSaleSearchPanel.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 btnSaleSearchPanelActionPerformed(evt);
+            }
+        });
+
+        GetAllSales.setText("Get All Sales");
+        GetAllSales.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                GetAllSalesActionPerformed(evt);
             }
         });
 
@@ -110,12 +138,17 @@ public class DP2 extends javax.swing.JFrame {
             .addGroup(MainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAddSaleRecod)
-                    .addComponent(btnWeeklyReport))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnMonthlyReport)
-                    .addComponent(btnSaleSearchPanel))
+                    .addGroup(MainPanelLayout.createSequentialGroup()
+                        .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAddSaleRecod)
+                            .addComponent(btnWeeklyReport))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnMonthlyReport)
+                            .addComponent(btnSaleSearchPanel)))
+                    .addGroup(MainPanelLayout.createSequentialGroup()
+                        .addComponent(GetAllSales)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         MainPanelLayout.setVerticalGroup(
@@ -131,7 +164,26 @@ public class DP2 extends javax.swing.JFrame {
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnWeeklyReport)
                     .addComponent(btnSaleSearchPanel))
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(GetAllSales)
+                .addContainerGap(43, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout allSalePanelLayout = new javax.swing.GroupLayout(allSalePanel);
+        allSalePanel.setLayout(allSalePanelLayout);
+        allSalePanelLayout.setHorizontalGroup(
+            allSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(allSalePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(allSaleScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        allSalePanelLayout.setVerticalGroup(
+            allSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(allSalePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(allSaleScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -139,11 +191,16 @@ public class DP2 extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(SaleSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(316, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(SaleSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(allSalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(200, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,7 +209,9 @@ public class DP2 extends javax.swing.JFrame {
                 .addComponent(SaleSearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
                 .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(254, Short.MAX_VALUE))
+                .addGap(45, 45, 45)
+                .addComponent(allSalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
@@ -162,6 +221,29 @@ public class DP2 extends javax.swing.JFrame {
         MainPanel.setVisible(false);
         SaleSearchPanel.setVisible(true);
     }//GEN-LAST:event_btnSaleSearchPanelActionPerformed
+
+    private void GetAllSalesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_GetAllSalesActionPerformed
+    {//GEN-HEADEREND:event_GetAllSalesActionPerformed
+        // TODO add your handling code here:
+        MainPanel.setVisible(false);
+        allSalePanel.setVisible(true);
+        SaleJpaController saleController = new SaleJpaController(emf);
+        List<Sale> results = saleController.findSaleEntities();
+        List<String[]> data = new ArrayList<>();
+        String[] columnNames = {"Sales ID", "Product ID", "Qty", "Cost", "SaleDate"};
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        for (Sale sale : results) {
+            data.add(new String[] {
+                sale.getSalePK().getSaleId() + "",
+                sale.getSalePK().getProdId() + "",
+                sale.getSaleQty() + "",
+                sale.getSalePrice() + "",
+                sdf.format(sale.getSaleDate()) + ""
+            });
+        }
+        JTable allSaleTable = new JTable(data.toArray(new Object[][]{}), columnNames);
+        allSaleScrollPane.getViewport().add(allSaleTable);
+    }//GEN-LAST:event_GetAllSalesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,8 +285,11 @@ public class DP2 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton GetAllSales;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JPanel SaleSearchPanel;
+    private javax.swing.JPanel allSalePanel;
+    private javax.swing.JScrollPane allSaleScrollPane;
     private javax.swing.JButton btnAddSaleRecod;
     private javax.swing.JButton btnClearSaleSearch;
     private javax.swing.JButton btnMonthlyReport;

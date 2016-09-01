@@ -99,7 +99,7 @@ public class Sale implements Serializable
     }
 
     public Date getSaleDate()
-    {
+    {     
         return saleDate;
     }
 
