@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 /**
@@ -252,6 +253,11 @@ public class DP2 extends javax.swing.JFrame {
         jLabel7.setText("ADD SALE RECORD");
 
         btnAddSale.setText("Add");
+        btnAddSale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddSaleActionPerformed(evt);
+            }
+        });
 
         btnAddSaleClear.setText("Clear");
 
@@ -543,6 +549,15 @@ public class DP2 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEditSaveSaleActionPerformed
 
+    private void btnAddSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSaleActionPerformed
+        
+    }//GEN-LAST:event_btnAddSaleActionPerformed
+
+    private int parseInt(String s) {
+        int i = Integer.parseInt(s);
+        return i;
+    }
+    
     /**
      * @param args the command line arguments
      */
