@@ -32,7 +32,7 @@ public class DP2 extends javax.swing.JFrame {
         allSalePanel.setVisible(false);
         addSalePanel.setVisible(false);
         displaySalePanel.setVisible(false);
-        this.pack();
+        
     }
 
     /**
