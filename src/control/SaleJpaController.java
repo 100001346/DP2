@@ -15,9 +15,12 @@ import javax.persistence.criteria.Root;
 import entity.Product;
 import entity.Sale;
 import entity.SalePK;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.xml.transform.OutputKeys;
 
 /**
@@ -201,6 +204,13 @@ public class SaleJpaController implements Serializable
         {
             em.close();
         }
+    }
+    
+    public List<Sale> findBySaleId(Long saleId) {
+        EntityManager em = getEntityManager();
+        TypedQuery query = em.createNamedQuery("Sale.findBySaleId", Sale.class)
+                .setParameter("saleId", saleId);
+        return query.getResultList();
     }
 
     public int getSaleCount()

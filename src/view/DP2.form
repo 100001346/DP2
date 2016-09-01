@@ -32,9 +32,14 @@
                           <Component id="saleSearchPanel" min="-2" pref="286" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="addSalePanel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="displaySalePanel" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="addSalePanel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="editSalePanel" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="displaySalePanel" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
@@ -50,13 +55,21 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="displaySalePanel" max="32767" attributes="0"/>
+                  <Component id="editSalePanel" max="32767" attributes="0"/>
                   <Component id="addSalePanel" min="-2" max="-2" attributes="0"/>
                   <Component id="saleSearchPanel" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-              <Component id="mainPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                      <Component id="mainPanel" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="displaySalePanel" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace min="-2" pref="164" max="-2" attributes="0"/>
               <Component id="allSalePanel" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -424,7 +437,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="displaySalePanel">
+    <Container class="javax.swing.JPanel" name="editSalePanel">
 
       <Layout>
         <DimensionLayout dim="0">
@@ -442,11 +455,11 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtDisplaySaleId" alignment="0" pref="122" max="32767" attributes="0"/>
-                          <Component id="txtDisplayProductId" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtDisplaySaleQty" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtDisplaySalePrice" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtDisplaySaleDate" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtEditSaleId" alignment="0" pref="122" max="32767" attributes="0"/>
+                          <Component id="txtEditProductId" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtEditSaleQty" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtEditSalePrice" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtEditSaleDate" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="btnEditSaveSale" min="-2" max="-2" attributes="0"/>
@@ -465,27 +478,27 @@
                   <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtDisplaySaleId" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtEditSaleId" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblEditSaleId" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtDisplayProductId" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtEditProductId" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblEditProductId" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtDisplaySaleQty" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtEditSaleQty" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblEditSaleQty" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtDisplaySalePrice" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtEditSalePrice" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblEditSalePrice" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtDisplaySaleDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtEditSaleDate" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblEditSaleDate" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -504,30 +517,15 @@
             <Property name="text" type="java.lang.String" value="SALE RECORD"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtDisplaySaleId">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
+        <Component class="javax.swing.JTextField" name="txtEditSaleId">
         </Component>
-        <Component class="javax.swing.JTextField" name="txtDisplayProductId">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
+        <Component class="javax.swing.JTextField" name="txtEditProductId">
         </Component>
-        <Component class="javax.swing.JTextField" name="txtDisplaySaleQty">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
+        <Component class="javax.swing.JTextField" name="txtEditSaleQty">
         </Component>
-        <Component class="javax.swing.JTextField" name="txtDisplaySalePrice">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
+        <Component class="javax.swing.JTextField" name="txtEditSalePrice">
         </Component>
-        <Component class="javax.swing.JTextField" name="txtDisplaySaleDate">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
+        <Component class="javax.swing.JTextField" name="txtEditSaleDate">
         </Component>
         <Component class="javax.swing.JButton" name="btnEditSaveSale">
           <Properties>
@@ -568,6 +566,36 @@
         <Component class="javax.swing.JLabel" name="lblEditSaleDate">
           <Properties>
             <Property name="text" type="java.lang.String" value="Date"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="displaySalePanel">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                  <Component id="lblSaleSearchResult" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="35" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Component id="lblSaleSearchResult" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="128" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="lblSaleSearchResult">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="SALE SEARCH RESULTS"/>
           </Properties>
         </Component>
       </SubComponents>

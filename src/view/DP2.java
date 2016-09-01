@@ -12,6 +12,7 @@ import entity.Inventory;
 import entity.Product;
 import entity.Sale;
 import entity.SalePK;
+import java.awt.BorderLayout;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,6 +24,7 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 /**
@@ -49,8 +51,10 @@ public class DP2 extends javax.swing.JFrame {
         saleSearchPanel.setVisible(false);
         allSalePanel.setVisible(false);
         addSalePanel.setVisible(false);
+        editSalePanel.setVisible(false);
         displaySalePanel.setVisible(false);
-        
+        displaySalePanel.setLayout(new BorderLayout());
+       
     }
 
     /**
@@ -94,13 +98,13 @@ public class DP2 extends javax.swing.JFrame {
         lblAddSaleQty = new javax.swing.JLabel();
         lblAddSalePrice = new javax.swing.JLabel();
         lblAddSaleDate = new javax.swing.JLabel();
-        displaySalePanel = new javax.swing.JPanel();
+        editSalePanel = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        txtDisplaySaleId = new javax.swing.JTextField();
-        txtDisplayProductId = new javax.swing.JTextField();
-        txtDisplaySaleQty = new javax.swing.JTextField();
-        txtDisplaySalePrice = new javax.swing.JTextField();
-        txtDisplaySaleDate = new javax.swing.JTextField();
+        txtEditSaleId = new javax.swing.JTextField();
+        txtEditProductId = new javax.swing.JTextField();
+        txtEditSaleQty = new javax.swing.JTextField();
+        txtEditSalePrice = new javax.swing.JTextField();
+        txtEditSaleDate = new javax.swing.JTextField();
         btnEditSaveSale = new javax.swing.JButton();
         btnCancelSaveSale = new javax.swing.JButton();
         lblEditSaleId = new javax.swing.JLabel();
@@ -108,6 +112,8 @@ public class DP2 extends javax.swing.JFrame {
         lblEditSaleQty = new javax.swing.JLabel();
         lblEditSalePrice = new javax.swing.JLabel();
         lblEditSaleDate = new javax.swing.JLabel();
+        displaySalePanel = new javax.swing.JPanel();
+        lblSaleSearchResult = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -356,16 +362,6 @@ public class DP2 extends javax.swing.JFrame {
 
         jLabel13.setText("SALE RECORD");
 
-        txtDisplaySaleId.setEditable(false);
-
-        txtDisplayProductId.setEditable(false);
-
-        txtDisplaySaleQty.setEditable(false);
-
-        txtDisplaySalePrice.setEditable(false);
-
-        txtDisplaySaleDate.setEditable(false);
-
         btnEditSaveSale.setText("Edit");
         btnEditSaveSale.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -390,63 +386,82 @@ public class DP2 extends javax.swing.JFrame {
 
         lblEditSaleDate.setText("Date");
 
-        javax.swing.GroupLayout displaySalePanelLayout = new javax.swing.GroupLayout(displaySalePanel);
-        displaySalePanel.setLayout(displaySalePanelLayout);
-        displaySalePanelLayout.setHorizontalGroup(
-            displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(displaySalePanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout editSalePanelLayout = new javax.swing.GroupLayout(editSalePanel);
+        editSalePanel.setLayout(editSalePanelLayout);
+        editSalePanelLayout.setHorizontalGroup(
+            editSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editSalePanelLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(editSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblEditSaleId)
                     .addComponent(lblEditProductId)
                     .addComponent(lblEditSaleQty)
                     .addComponent(lblEditSalePrice)
                     .addComponent(lblEditSaleDate))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(editSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(editSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel13)
-                        .addComponent(txtDisplaySaleId, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
-                        .addComponent(txtDisplayProductId)
-                        .addComponent(txtDisplaySaleQty)
-                        .addComponent(txtDisplaySalePrice)
-                        .addComponent(txtDisplaySaleDate))
-                    .addGroup(displaySalePanelLayout.createSequentialGroup()
+                        .addComponent(txtEditSaleId, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                        .addComponent(txtEditProductId)
+                        .addComponent(txtEditSaleQty)
+                        .addComponent(txtEditSalePrice)
+                        .addComponent(txtEditSaleDate))
+                    .addGroup(editSalePanelLayout.createSequentialGroup()
                         .addComponent(btnEditSaveSale)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnCancelSaveSale)))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
+        editSalePanelLayout.setVerticalGroup(
+            editSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editSalePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel13)
+                .addGap(18, 18, 18)
+                .addGroup(editSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEditSaleId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEditSaleId))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(editSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEditProductId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEditProductId))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(editSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEditSaleQty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEditSaleQty))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(editSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEditSalePrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEditSalePrice))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(editSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEditSaleDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEditSaleDate))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(editSalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEditSaveSale)
+                    .addComponent(btnCancelSaveSale))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        lblSaleSearchResult.setText("SALE SEARCH RESULTS");
+
+        javax.swing.GroupLayout displaySalePanelLayout = new javax.swing.GroupLayout(displaySalePanel);
+        displaySalePanel.setLayout(displaySalePanelLayout);
+        displaySalePanelLayout.setHorizontalGroup(
+            displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(displaySalePanelLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(lblSaleSearchResult)
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
         displaySalePanelLayout.setVerticalGroup(
             displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(displaySalePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel13)
-                .addGap(18, 18, 18)
-                .addGroup(displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDisplaySaleId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblEditSaleId))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDisplayProductId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblEditProductId))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDisplaySaleQty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblEditSaleQty))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDisplaySalePrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblEditSalePrice))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDisplaySaleDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblEditSaleDate))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEditSaveSale)
-                    .addComponent(btnCancelSaveSale))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lblSaleSearchResult)
+                .addContainerGap(128, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -461,9 +476,12 @@ public class DP2 extends javax.swing.JFrame {
                             .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(saleSearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(addSalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(displaySalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(addSalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(editSalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(displaySalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(57, 57, 57)
                         .addComponent(allSalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -474,12 +492,17 @@ public class DP2 extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(displaySalePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editSalePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(addSalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(saleSearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46)
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(displaySalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(164, 164, 164)
                 .addComponent(allSalePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -499,7 +522,7 @@ public class DP2 extends javax.swing.JFrame {
         allSalePanel.setVisible(true);
         List<Sale> results = saleController.findSaleEntities();
         List<String[]> data = new ArrayList<>();
-        String[] columnNames = {"Sales ID", "Product ID", "Qty", "Cost", "SaleDate"};
+        String[] columnNames = {"Sales ID", "Product ID", "Qty", "Price", "SaleDate"};
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         for (Sale sale : results) {
             data.add(new String[] {
@@ -522,6 +545,33 @@ public class DP2 extends javax.swing.JFrame {
     }//GEN-LAST:event_allSaleBackActionPerformed
 
     private void btnSaleSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaleSearchActionPerformed
+        String txtSaleId = txtSaleSearch.getText();
+        if (this.isEmpty("Sale ID", txtSaleId))
+            return;
+        if (!this.isLong(txtSaleId)) {
+            showError("Invalid Sale ID");
+            return;
+        }
+        
+        long saleId = Long.parseLong(txtSaleId);
+        
+        List<Sale> results = saleController.findBySaleId(saleId);
+        List<String[]> data = new ArrayList<>();
+        String[] columnNames = {"Sales ID", "Product ID", "Qty", "Price", "SaleDate"};
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        for (Sale sale : results) {
+            data.add(new String[] {
+                sale.getSalePK().getSaleId() + "",
+                sale.getSalePK().getProdId() + "",
+                sale.getSaleQty() + "",
+                sale.getSalePrice() + "",
+                sdf.format(sale.getSaleDate()) + ""
+            });
+        }
+        JTable saleSearchResultTable = new JTable(data.toArray(new Object[][]{}), columnNames);
+        JScrollPane scrollPane = new JScrollPane(saleSearchResultTable);
+        displaySalePanel.add(scrollPane, BorderLayout.CENTER);
+        displaySalePanel.add(lblSaleSearchResult, BorderLayout.NORTH);
         saleSearchPanel.setVisible(false);
         displaySalePanel.setVisible(true);
     }//GEN-LAST:event_btnSaleSearchActionPerformed
@@ -543,25 +593,12 @@ public class DP2 extends javax.swing.JFrame {
 
     private void btnCancelSaveSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelSaveSaleActionPerformed
         saleSearchPanel.setVisible(true);
-        displaySalePanel.setVisible(false);
-        btnEditSaveSale.setText("Edit");
-        txtDisplaySaleId.setEditable(false);
-        txtDisplayProductId.setEditable(false);
-        txtDisplaySaleQty.setEditable(false);
-        txtDisplaySalePrice.setEditable(false);
-        txtDisplaySaleDate.setEditable(false);
+        editSalePanel.setVisible(false);
+        
     }//GEN-LAST:event_btnCancelSaveSaleActionPerformed
 
     private void btnEditSaveSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditSaveSaleActionPerformed
-        String status = btnEditSaveSale.getText();
-        if (status.equals("Edit")) {
-            btnEditSaveSale.setText("Save");
-            txtDisplaySaleId.setEditable(true);
-            txtDisplayProductId.setEditable(true);
-            txtDisplaySaleQty.setEditable(true);
-            txtDisplaySalePrice.setEditable(true);
-            txtDisplaySaleDate.setEditable(true); 
-        }
+        
     }//GEN-LAST:event_btnEditSaveSaleActionPerformed
 
     private void btnAddSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSaleActionPerformed
@@ -759,6 +796,7 @@ public class DP2 extends javax.swing.JFrame {
     private javax.swing.JButton btnSaleSearchPanel;
     private javax.swing.JButton btnWeeklyReport;
     private javax.swing.JPanel displaySalePanel;
+    private javax.swing.JPanel editSalePanel;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel lblAddProductId;
@@ -774,6 +812,7 @@ public class DP2 extends javax.swing.JFrame {
     private javax.swing.JLabel lblMain;
     private javax.swing.JLabel lblSaleId;
     private javax.swing.JLabel lblSaleSearch;
+    private javax.swing.JLabel lblSaleSearchResult;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel saleSearchPanel;
     private javax.swing.JTextField txtAddProductId;
@@ -781,11 +820,11 @@ public class DP2 extends javax.swing.JFrame {
     private javax.swing.JTextField txtAddSaleId;
     private javax.swing.JTextField txtAddSalePrice;
     private javax.swing.JTextField txtAddSaleQty;
-    private javax.swing.JTextField txtDisplayProductId;
-    private javax.swing.JTextField txtDisplaySaleDate;
-    private javax.swing.JTextField txtDisplaySaleId;
-    private javax.swing.JTextField txtDisplaySalePrice;
-    private javax.swing.JTextField txtDisplaySaleQty;
+    private javax.swing.JTextField txtEditProductId;
+    private javax.swing.JTextField txtEditSaleDate;
+    private javax.swing.JTextField txtEditSaleId;
+    private javax.swing.JTextField txtEditSalePrice;
+    private javax.swing.JTextField txtEditSaleQty;
     private javax.swing.JTextField txtSaleSearch;
     // End of variables declaration//GEN-END:variables
 }
