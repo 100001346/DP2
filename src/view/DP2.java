@@ -650,6 +650,7 @@ public class DP2 extends javax.swing.JFrame {
         int prodID = Integer.parseInt(txtProdID);
         int qty = Integer.parseInt(txtQty);
         double price = Double.parseDouble(txtPrice);
+        //check product id
         Product p = productController.findProduct(prodID);
         if (p == null) {
             this.showError("Invalid Product ID");
