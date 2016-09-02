@@ -10,7 +10,7 @@ CREATE TABLE product
 	prod_id int(8),
 	prod_name varchar(100) NOT NULL,
 	prod_desc varchar(1000),
-	prod_price double NOT NULL,
+	prod_price decimal(5,2) NOT NULL,
 	PRIMARY KEY (prod_id)
 );
 
@@ -73,7 +73,7 @@ CREATE TABLE sale
 	sale_id bigint(12),
 	prod_id int(8),
 	sale_qty int(4),
-	sale_price double,
+	sale_price decimal(5,2),
 	sale_date date,
 	PRIMARY KEY (sale_id, prod_id),
 	FOREIGN KEY (prod_id) REFERENCES product(prod_id)
