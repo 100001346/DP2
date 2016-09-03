@@ -219,6 +219,22 @@ public class InventoryJpaController implements Serializable
             em.close();
         }
     }
+    
+    public List<Inventory> findLowStock()
+    {
+        EntityManager em = getEntityManager();
+        Query query = em.createQuery("SELECT i FROM Inventory i WHERE i.invQty <= i.invLow");
+        
+        return query.getResultList();
+    }
+    
+    public List<Inventory> findWarningStock()
+    {
+        EntityManager em = getEntityManager();
+        Query query = em.createQuery("SELECT i FROM Inventory i WHERE i.invQty > i.invLow AND i.invQty <= i.invOrder");
+        
+        return query.getResultList();
+    }
 
     public Inventory findInventory(Integer id)
     {
