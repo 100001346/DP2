@@ -224,6 +224,7 @@ public class InventoryJpaController implements Serializable
     {
         EntityManager em = getEntityManager();
         Query query = em.createQuery("SELECT i FROM Inventory i WHERE i.invQty <= i.invLow");
+        //Query query = em.createQuery("SELECT i.prodId, p.prodName FROM Inventory i JOIN Product p ON i.prodId = p.prodId WHERE i.invQty <= i.invLow");
         
         return query.getResultList();
     }
@@ -232,7 +233,6 @@ public class InventoryJpaController implements Serializable
     {
         EntityManager em = getEntityManager();
         Query query = em.createQuery("SELECT i FROM Inventory i WHERE i.invQty > i.invLow AND i.invQty <= i.invOrder");
-        
         return query.getResultList();
     }
 

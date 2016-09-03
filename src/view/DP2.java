@@ -785,13 +785,10 @@ public class DP2 extends javax.swing.JFrame {
         
         List<Inventory> results = inventoryController.findLowStock();
         List<String[]> data = new ArrayList<>();
-        String[] columnNames = {"Product ID", "Inventory Qty", "Inventory Low", "Inventory Warning"};
+        String[] columnNames = {"Product ID"};
         for (Inventory inventory : results) {
             data.add(new String[] {
-                inventory.getProdId().toString() + "",
-                inventory.getInvQty() + "",
-                inventory.getInvLow() + "",
-                inventory.getInvOrder() + ""
+                inventory.getProdId().toString() + ""
             });
         }
         JTable allLowStockTable = new JTable(data.toArray(new Object[][]{}), columnNames);
@@ -801,10 +798,7 @@ public class DP2 extends javax.swing.JFrame {
         data = new ArrayList<>();
         for (Inventory inventory : results) {
             data.add(new String[] {
-                inventory.getProdId().toString() + "",
-                inventory.getInvQty() + "",
-                inventory.getInvLow() + "",
-                inventory.getInvOrder() + ""
+                inventory.getProdId().toString() + ""
             });
         }
         allLowStockTable = new JTable(data.toArray(new Object[][]{}), columnNames);
