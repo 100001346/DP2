@@ -27,19 +27,14 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="mainPanel" min="-2" max="-2" attributes="0"/>
-                          <Component id="saleSearchPanel" min="-2" pref="286" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="mainPanel" max="32767" attributes="0"/>
+                          <Component id="saleSearchPanel" pref="330" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="addSalePanel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="editSalePanel" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="displaySalePanel" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="addSalePanel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="editSalePanel" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
@@ -59,16 +54,8 @@
                   <Component id="addSalePanel" min="-2" max="-2" attributes="0"/>
                   <Component id="saleSearchPanel" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-                      <Component id="mainPanel" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="displaySalePanel" min="-2" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
+              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+              <Component id="mainPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="164" max="-2" attributes="0"/>
               <Component id="allSalePanel" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -84,11 +71,13 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="lblSaleId" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblSaleSearch" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtSaleSearch" min="-2" pref="204" max="-2" attributes="0"/>
+                      <Component id="lblSaleId" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="txtSearchSaleId" pref="204" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="btnSaleSearch" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -96,8 +85,14 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnSaleSearchBack" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="txtSearchProdId" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
+                  <Component id="lblSaleSearch" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -108,10 +103,15 @@
                   <Component id="lblSaleSearch" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtSaleSearch" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtSearchSaleId" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblSaleId" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="txtSearchProdId" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnSaleSearch" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnClearSaleSearch" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -123,7 +123,10 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="txtSaleSearch">
+        <Component class="javax.swing.JTextField" name="txtSearchSaleId">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="776496839426"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnSaleSearch">
           <Properties>
@@ -155,6 +158,16 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaleSearchBackActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtSearchProdId">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="40973769"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Product ID"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -380,14 +393,23 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtAddSaleId">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="776496839426"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtAddProductId">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="40973769"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtAddSaleQty">
         </Component>
         <Component class="javax.swing.JTextField" name="txtAddSalePrice">
         </Component>
         <Component class="javax.swing.JTextField" name="txtAddSaleDate">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="03/05/2016"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnAddSale">
           <Properties>
@@ -566,36 +588,6 @@
         <Component class="javax.swing.JLabel" name="lblEditSaleDate">
           <Properties>
             <Property name="text" type="java.lang.String" value="Date"/>
-          </Properties>
-        </Component>
-      </SubComponents>
-    </Container>
-    <Container class="javax.swing.JPanel" name="displaySalePanel">
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                  <Component id="lblSaleSearchResult" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="35" max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="lblSaleSearchResult" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="128" max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Component class="javax.swing.JLabel" name="lblSaleSearchResult">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="SALE SEARCH RESULTS"/>
           </Properties>
         </Component>
       </SubComponents>

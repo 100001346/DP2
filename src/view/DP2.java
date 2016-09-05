@@ -8,23 +8,19 @@ package view;
 import control.InventoryJpaController;
 import control.ProductJpaController;
 import control.SaleJpaController;
-import entity.Inventory;
+import control.exceptions.PreexistingEntityException;
 import entity.Product;
 import entity.Sale;
 import entity.SalePK;
-import java.awt.BorderLayout;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 /**
@@ -36,14 +32,16 @@ public class DP2 extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
-    private EntityManagerFactory emf;
-    private SaleJpaController saleController;
-    private InventoryJpaController inventoryController;
-    private ProductJpaController productController;
+    private final EntityManagerFactory emf;
+    private final SaleJpaController saleController;
+    private final InventoryJpaController inventoryController;
+    private final ProductJpaController productController;
+    private final SimpleDateFormat sdf;
     private static final String DATE_FORMAT = "dd/MM/yyyy";
-    
+
     public DP2() {
         initComponents();
+        sdf = new SimpleDateFormat(DATE_FORMAT);
         emf = Persistence.createEntityManagerFactory("DP2PU");
         saleController = new SaleJpaController(emf);
         productController = new ProductJpaController(emf);
@@ -52,9 +50,7 @@ public class DP2 extends javax.swing.JFrame {
         allSalePanel.setVisible(false);
         addSalePanel.setVisible(false);
         editSalePanel.setVisible(false);
-        displaySalePanel.setVisible(false);
-        displaySalePanel.setLayout(new BorderLayout());
-       
+
     }
 
     /**
@@ -67,12 +63,14 @@ public class DP2 extends javax.swing.JFrame {
     private void initComponents() {
 
         saleSearchPanel = new javax.swing.JPanel();
-        txtSaleSearch = new javax.swing.JTextField();
+        txtSearchSaleId = new javax.swing.JTextField();
         btnSaleSearch = new javax.swing.JButton();
         lblSaleId = new javax.swing.JLabel();
         btnClearSaleSearch = new javax.swing.JButton();
         lblSaleSearch = new javax.swing.JLabel();
         btnSaleSearchBack = new javax.swing.JButton();
+        txtSearchProdId = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         mainPanel = new javax.swing.JPanel();
         lblMain = new javax.swing.JLabel();
         btnAddSaleRecod = new javax.swing.JButton();
@@ -112,10 +110,10 @@ public class DP2 extends javax.swing.JFrame {
         lblEditSaleQty = new javax.swing.JLabel();
         lblEditSalePrice = new javax.swing.JLabel();
         lblEditSaleDate = new javax.swing.JLabel();
-        displaySalePanel = new javax.swing.JPanel();
-        lblSaleSearchResult = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        txtSearchSaleId.setText("776496839426");
 
         btnSaleSearch.setText("Search");
         btnSaleSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -137,24 +135,34 @@ public class DP2 extends javax.swing.JFrame {
             }
         });
 
+        txtSearchProdId.setText("40973769");
+
+        jLabel1.setText("Product ID");
+
         javax.swing.GroupLayout saleSearchPanelLayout = new javax.swing.GroupLayout(saleSearchPanel);
         saleSearchPanel.setLayout(saleSearchPanelLayout);
         saleSearchPanelLayout.setHorizontalGroup(
             saleSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, saleSearchPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblSaleId)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(saleSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblSaleSearch)
-                    .addComponent(txtSaleSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSaleId, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(saleSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtSearchSaleId, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
                     .addGroup(saleSearchPanelLayout.createSequentialGroup()
                         .addComponent(btnSaleSearch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnClearSaleSearch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnSaleSearchBack)))
+                        .addComponent(btnSaleSearchBack))
+                    .addComponent(txtSearchProdId))
                 .addGap(72, 72, 72))
+            .addGroup(saleSearchPanelLayout.createSequentialGroup()
+                .addGap(105, 105, 105)
+                .addComponent(lblSaleSearch)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         saleSearchPanelLayout.setVerticalGroup(
             saleSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,9 +171,13 @@ public class DP2 extends javax.swing.JFrame {
                 .addComponent(lblSaleSearch)
                 .addGap(23, 23, 23)
                 .addGroup(saleSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSaleSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSearchSaleId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblSaleId))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(saleSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSearchProdId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(16, 16, 16)
                 .addGroup(saleSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSaleSearch)
                     .addComponent(btnClearSaleSearch)
@@ -273,6 +285,12 @@ public class DP2 extends javax.swing.JFrame {
         );
 
         jLabel7.setText("ADD SALE RECORD");
+
+        txtAddSaleId.setText("776496839426");
+
+        txtAddProductId.setText("40973769");
+
+        txtAddSaleDate.setText("03/05/2016");
 
         btnAddSale.setText("Add");
         btnAddSale.addActionListener(new java.awt.event.ActionListener() {
@@ -445,25 +463,6 @@ public class DP2 extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        lblSaleSearchResult.setText("SALE SEARCH RESULTS");
-
-        javax.swing.GroupLayout displaySalePanelLayout = new javax.swing.GroupLayout(displaySalePanel);
-        displaySalePanel.setLayout(displaySalePanelLayout);
-        displaySalePanelLayout.setHorizontalGroup(
-            displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(displaySalePanelLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(lblSaleSearchResult)
-                .addContainerGap(35, Short.MAX_VALUE))
-        );
-        displaySalePanelLayout.setVerticalGroup(
-            displaySalePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(displaySalePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblSaleSearchResult)
-                .addContainerGap(128, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -472,16 +471,13 @@ public class DP2 extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(saleSearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(saleSearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 330, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(addSalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(editSalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(displaySalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(addSalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(editSalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(57, 57, 57)
                         .addComponent(allSalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -495,13 +491,8 @@ public class DP2 extends javax.swing.JFrame {
                     .addComponent(editSalePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(addSalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(saleSearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(displaySalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(46, 46, 46)
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(164, 164, 164)
                 .addComponent(allSalePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -523,9 +514,8 @@ public class DP2 extends javax.swing.JFrame {
         List<Sale> results = saleController.findSaleEntities();
         List<String[]> data = new ArrayList<>();
         String[] columnNames = {"Sales ID", "Product ID", "Qty", "Price", "SaleDate"};
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         for (Sale sale : results) {
-            data.add(new String[] {
+            data.add(new String[]{
                 sale.getSalePK().getSaleId() + "",
                 sale.getSalePK().getProdId() + "",
                 sale.getSaleQty() + "",
@@ -544,43 +534,6 @@ public class DP2 extends javax.swing.JFrame {
         allSalePanel.setVisible(false);
     }//GEN-LAST:event_allSaleBackActionPerformed
 
-    private void btnSaleSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaleSearchActionPerformed
-        String txtSaleId = txtSaleSearch.getText();
-        if (this.isEmpty("Sale ID", txtSaleId))
-            return;
-        if (!this.isLong(txtSaleId)) {
-            showError("Invalid Sale ID");
-            return;
-        }
-        
-        long saleId = Long.parseLong(txtSaleId);
-        
-        List<Sale> results = saleController.findBySaleId(saleId);
-        List<String[]> data = new ArrayList<>();
-        String[] columnNames = {"Sales ID", "Product ID", "Qty", "Price", "SaleDate"};
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        for (Sale sale : results) {
-            data.add(new String[] {
-                sale.getSalePK().getSaleId() + "",
-                sale.getSalePK().getProdId() + "",
-                sale.getSaleQty() + "",
-                sale.getSalePrice() + "",
-                sdf.format(sale.getSaleDate()) + ""
-            });
-        }
-        JTable saleSearchResultTable = new JTable(data.toArray(new Object[][]{}), columnNames);
-        JScrollPane scrollPane = new JScrollPane(saleSearchResultTable);
-        displaySalePanel.add(scrollPane, BorderLayout.CENTER);
-        displaySalePanel.add(lblSaleSearchResult, BorderLayout.NORTH);
-        saleSearchPanel.setVisible(false);
-        displaySalePanel.setVisible(true);
-    }//GEN-LAST:event_btnSaleSearchActionPerformed
-
-    private void btnSaleSearchBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaleSearchBackActionPerformed
-        mainPanel.setVisible(true);
-        saleSearchPanel.setVisible(false);
-    }//GEN-LAST:event_btnSaleSearchBackActionPerformed
-
     private void btnAddSaleBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSaleBackActionPerformed
         mainPanel.setVisible(true);
         addSalePanel.setVisible(false);
@@ -594,90 +547,204 @@ public class DP2 extends javax.swing.JFrame {
     private void btnCancelSaveSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelSaveSaleActionPerformed
         saleSearchPanel.setVisible(true);
         editSalePanel.setVisible(false);
-        
+
     }//GEN-LAST:event_btnCancelSaveSaleActionPerformed
 
     private void btnEditSaveSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditSaveSaleActionPerformed
-        
+        if (btnEditSaveSale.getText().equals("Save")) {
+            try {
+                String txtProdID = txtEditProductId.getText();
+                String txtQty = txtEditSaleQty.getText();
+                String txtPrice = txtEditSalePrice.getText();
+                String txtDate = txtEditSaleDate.getText();
+
+                //check empty fields
+                if (this.isEmpty(lblAddProductId.getText(), txtProdID)) {
+                    return;
+                }
+                if (this.isEmpty(lblAddSaleQty.getText(), txtQty)) {
+                    return;
+                }
+                if (this.isEmpty(lblAddSalePrice.getText(), txtPrice)) {
+                    return;
+                }
+                if (this.isEmpty(lblAddSaleDate.getText(), txtDate)) {
+                    return;
+                }
+
+                //check parsing number
+                if (!this.isInteger(txtProdID)) {
+                    this.showError("Invalid Product ID");
+                    return;
+                }
+                if (!this.isInteger(txtQty)) {
+                    this.showError("Invalid Sale Quantity");
+                    return;
+                }
+                if (!this.isDouble(txtPrice)) {
+                    this.showError("Invalid Sale Price");
+                    return;
+                }
+
+                long saleID = Long.parseLong(txtEditSaleId.getText());
+                int prodID = Integer.parseInt(txtProdID);
+                int qty = Integer.parseInt(txtQty);
+                double price = Double.parseDouble(txtPrice);
+                Date date = sdf.parse(txtDate);
+
+                Product p = productController.findProduct(prodID);
+                if (p == null) {
+                    showError("Product ID does not exist");
+                    return;
+                }
+
+                Sale sale = new Sale(saleID, prodID);
+                sale.setProduct(p);
+                sale.setSaleQty(qty);
+                sale.setSalePrice(new BigDecimal(price));
+                sale.setSaleDate(date);
+
+                saleController.edit(sale);
+                showMessage("Sale record saved");
+            } catch (Exception e) {
+                showError("Database connection lost");
+            }
+        }
+        if (btnEditSaveSale.getText().equals("Edit")) {
+
+            btnEditSaveSale.setText("Save");
+            txtEditProductId.setEditable(true);
+            txtEditSaleQty.setEditable(true);
+            txtEditSalePrice.setEditable(true);
+            txtEditSaleDate.setEditable(true);
+
+        }
     }//GEN-LAST:event_btnEditSaveSaleActionPerformed
 
     private void btnAddSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSaleActionPerformed
-        
-        String txtSaleID = txtAddSaleId.getText();
-        String txtProdID = txtAddProductId.getText();
-        String txtQty = txtAddSaleQty.getText();
-        String txtPrice = txtAddSalePrice.getText();
-        String txtDate = txtAddSaleDate.getText();
-        Date saleDate = null;
-        
-        //check empty fields
-        if (this.isEmpty(lblAddSaleId.getText(), txtSaleID))
-            return;
-        if (this.isEmpty(lblAddProductId.getText(), txtProdID))
-            return;
-        if (this.isEmpty(lblAddSaleQty.getText(), txtQty))
-            return;
-        if (this.isEmpty(lblAddSalePrice.getText(), txtPrice))
-            return;
-        if (this.isEmpty(lblAddSaleDate.getText(), txtDate))
-            return;
-        
-        //check parsing number
-        if (!this.isLong(txtSaleID)) {
-            this.showError("Invalid Sale ID");
-            return;
-        }
-        if (!this.isInteger(txtProdID)) {
-            this.showError("Invalid Product ID");
-            return;
-        }
-        if (!this.isInteger(txtQty)) {
-            this.showError("Invalid Sale Quantity");
-            return;
-        }
-        if (!this.isDouble(txtPrice)) {
-            this.showError("Invalid Sale Price");
-            return;
-        }
-        
-        //check parsing date
-        if (!this.isDateString(txtDate)) {
-            this.showError("Invalid Sale Date");
-            return;
-        }
-        
-        long saleID = Long.parseLong(txtSaleID);
-        int prodID = Integer.parseInt(txtProdID);
-        int qty = Integer.parseInt(txtQty);
-        double price = Double.parseDouble(txtPrice);
-        //check product id
-        Product p = productController.findProduct(prodID);
-        if (p == null) {
-            this.showError("Invalid Product ID");
-            return;
-        }
-        
+
         try {
+
+            String txtSaleID = txtAddSaleId.getText();
+            String txtProdID = txtAddProductId.getText();
+            String txtQty = txtAddSaleQty.getText();
+            String txtPrice = txtAddSalePrice.getText();
+            String txtDate = txtAddSaleDate.getText();
+            Date saleDate = null;
+
+            //check empty fields
+            if (this.isEmpty(lblAddSaleId.getText(), txtSaleID)) {
+                return;
+            }
+            if (this.isEmpty(lblAddProductId.getText(), txtProdID)) {
+                return;
+            }
+            if (this.isEmpty(lblAddSaleQty.getText(), txtQty)) {
+                return;
+            }
+            if (this.isEmpty(lblAddSalePrice.getText(), txtPrice)) {
+                return;
+            }
+            if (this.isEmpty(lblAddSaleDate.getText(), txtDate)) {
+                return;
+            }
+
+            //check parsing number
+            if (!this.isLong(txtSaleID)) {
+                this.showError("Invalid Sale ID");
+                return;
+            }
+            if (!this.isInteger(txtProdID)) {
+                this.showError("Invalid Product ID");
+                return;
+            }
+            if (!this.isInteger(txtQty)) {
+                this.showError("Invalid Sale Quantity");
+                return;
+            }
+            if (!this.isDouble(txtPrice)) {
+                this.showError("Invalid Sale Price");
+                return;
+            }
+
+            //check parsing date
+            if (!this.isDateString(txtDate)) {
+                this.showError("Invalid Sale Date");
+                return;
+            }
+
+            long saleID = Long.parseLong(txtSaleID);
+            int prodID = Integer.parseInt(txtProdID);
+            int qty = Integer.parseInt(txtQty);
+            double price = Double.parseDouble(txtPrice);
+            //check product id
+            Product p = productController.findProduct(prodID);
+            if (p == null) {
+                this.showError("Invalid Product ID");
+                return;
+            }
+
             saleDate = this.formatStrToDate(txtDate);
-        } catch (ParseException ex) {
-            Logger.getLogger(DP2.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        Sale sale = new Sale(saleID, prodID);
-        sale.setSaleQty(qty);
-        sale.setSalePrice(new BigDecimal(price));
-        sale.setSaleDate(saleDate);
-        sale.setProduct(p);
-        try {
+
+            Sale sale = new Sale(saleID, prodID);
+            sale.setSaleQty(qty);
+            sale.setSalePrice(new BigDecimal(price));
+            sale.setSaleDate(saleDate);
+            sale.setProduct(p);
+
             saleController.create(sale);
-            this.showMessage("Sale Record Added");
+
+        } catch (PreexistingEntityException ex) {
+            showError("Sale record exists ");
         } catch (Exception ex) {
-            Logger.getLogger(DP2.class.getName()).log(Level.SEVERE, null, ex);
+            showError("Database connection error");
         }
-       
+
 
     }//GEN-LAST:event_btnAddSaleActionPerformed
-    
+
+    private void btnSaleSearchBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaleSearchBackActionPerformed
+        mainPanel.setVisible(true);
+        saleSearchPanel.setVisible(false);
+    }//GEN-LAST:event_btnSaleSearchBackActionPerformed
+
+    private void btnSaleSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaleSearchActionPerformed
+        String txtSaleId = txtSearchSaleId.getText();
+        String txtProdId = txtSearchProdId.getText();
+        if (this.isEmpty("Sale ID", txtSaleId)) {
+            return;
+        }
+        if (this.isEmpty("Product ID", txtProdId)) {
+            return;
+        }
+        if (!this.isInteger(txtProdId)) {
+            showError("Invalid Product ID");
+            return;
+        }
+        if (!this.isLong(txtSaleId)) {
+            showError("Invalid Sale ID");
+            return;
+        }
+
+        long saleId = Long.parseLong(txtSaleId);
+        int prodId = Integer.parseInt(txtProdId);
+
+        Sale result = saleController.findSale(new SalePK(saleId, prodId));
+        if (result == null) {
+            showError("Sale record does not exist");
+            return;
+        }
+
+        txtEditSaleId.setText(result.getSalePK().getSaleId() + "");
+        txtEditProductId.setText(result.getSalePK().getProdId() + "");
+        txtEditSaleQty.setText(result.getSaleQty() + "");
+        txtEditSalePrice.setText(result.getSalePrice() + "");
+        txtEditSaleDate.setText(sdf.format(result.getSaleDate()));
+
+        saleSearchPanel.setVisible(false);
+        editSalePanel.setVisible(true);
+    }//GEN-LAST:event_btnSaleSearchActionPerformed
+
     private boolean isDateString(String s) {
         try {
             Date d = this.formatStrToDate(s);
@@ -686,31 +753,31 @@ public class DP2 extends javax.swing.JFrame {
             return false;
         }
     }
-    
+
     private Date formatStrToDate(String s) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
         Date result = formatter.parse(s);
         return result;
     }
-    
+
     private boolean isInteger(String s) {
         try {
             int i = Integer.parseInt(s);
             return true;
         } catch (NumberFormatException e) {
             return false;
-        }  
+        }
     }
-    
+
     private boolean isLong(String s) {
         try {
             long n = Long.parseLong(s);
             return true;
         } catch (NumberFormatException e) {
             return false;
-        }  
+        }
     }
-    
+
     private boolean isDouble(String s) {
         try {
             double d = Double.parseDouble(s);
@@ -718,27 +785,28 @@ public class DP2 extends javax.swing.JFrame {
         } catch (NumberFormatException e) {
             return false;
         }
-        
+
     }
-    
+
     private boolean isEmpty(String fieldname, String value) {
         if (value.isEmpty()) {
             this.showError(fieldname + " cannot be empty");
             return true;
-        } else
-            return false;   
+        } else {
+            return false;
+        }
     }
-    
+
     private void showError(String msg) {
-        JOptionPane.showMessageDialog(rootPane, 
-                    msg, "ERROR", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(rootPane,
+                msg, "ERROR", JOptionPane.ERROR_MESSAGE);
     }
-    
+
     private void showMessage(String msg) {
-        JOptionPane.showMessageDialog(rootPane, 
-                    msg, null, JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(rootPane,
+                msg, null, JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -748,9 +816,7 @@ public class DP2 extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        
-        
-        
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -796,8 +862,8 @@ public class DP2 extends javax.swing.JFrame {
     private javax.swing.JButton btnSaleSearchBack;
     private javax.swing.JButton btnSaleSearchPanel;
     private javax.swing.JButton btnWeeklyReport;
-    private javax.swing.JPanel displaySalePanel;
     private javax.swing.JPanel editSalePanel;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel lblAddProductId;
@@ -813,7 +879,6 @@ public class DP2 extends javax.swing.JFrame {
     private javax.swing.JLabel lblMain;
     private javax.swing.JLabel lblSaleId;
     private javax.swing.JLabel lblSaleSearch;
-    private javax.swing.JLabel lblSaleSearchResult;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel saleSearchPanel;
     private javax.swing.JTextField txtAddProductId;
@@ -826,6 +891,7 @@ public class DP2 extends javax.swing.JFrame {
     private javax.swing.JTextField txtEditSaleId;
     private javax.swing.JTextField txtEditSalePrice;
     private javax.swing.JTextField txtEditSaleQty;
-    private javax.swing.JTextField txtSaleSearch;
+    private javax.swing.JTextField txtSearchProdId;
+    private javax.swing.JTextField txtSearchSaleId;
     // End of variables declaration//GEN-END:variables
 }
