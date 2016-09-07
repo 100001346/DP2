@@ -14,6 +14,8 @@ import entity.Sale;
 import entity.SalePK;
 import java.awt.BorderLayout;
 import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -783,24 +785,56 @@ public class DP2 extends javax.swing.JFrame {
         mainPanel.setVisible(false);
         outOfStockPanel.setVisible(true);
         
-        List<Inventory> results = inventoryController.findLowStock();
+        //List<Inventory> results = inventoryController.findLowStock();
         List<String[]> data = new ArrayList<>();
-        String[] columnNames = {"Product ID"};
-        for (Inventory inventory : results) {
-            data.add(new String[] {
-                inventory.getProdId().toString() + ""
-            });
+        String[] columnNames = {"Product ID", "Product Name"};
+        
+        //LOW STOCK ALERT TABLE
+        ResultSet lsa = inventoryController.findLowStock2();
+        
+        try
+        {
+            while (lsa.next())
+            {
+                data.add( new String[] {
+                   lsa.getString(1),
+                    lsa.getString(2)
+                });
+            }
+        }
+        catch (SQLException ex)
+        {
+            System.out.println(ex.toString());
         }
         JTable allLowStockTable = new JTable(data.toArray(new Object[][]{}), columnNames);
         allLowStockAlert.getViewport().add(allLowStockTable); 
         
-        results = inventoryController.findWarningStock();
-        data = new ArrayList<>();
-        for (Inventory inventory : results) {
-            data.add(new String[] {
-                inventory.getProdId().toString() + ""
-            });
+        
+        // LOW STOCK WARNING TABLE
+        ResultSet lsw = inventoryController.findWarningStock2();
+        data.clear();
+        
+        try
+        {
+            while (lsw.next())
+            {
+                data.add( new String[] {
+                   lsw.getString(1),
+                    lsw.getString(2)
+                });
+            }
         }
+        catch (SQLException ex)
+        {
+            System.out.println(ex.toString());
+        }
+//        results = inventoryController.findWarningStock();
+//        data = new ArrayList<>();
+//        for (Inventory inventory : results) {
+//            data.add(new String[] {
+//                inventory.getProdId().toString() + ""
+//            });
+//        }
         allLowStockTable = new JTable(data.toArray(new Object[][]{}), columnNames);
         allLowStockWarning.getViewport().add(allLowStockTable); 
     }//GEN-LAST:event_btnStockAlertWarningActionPerformed
