@@ -15,6 +15,11 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import entity.Product;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -218,6 +223,69 @@ public class InventoryJpaController implements Serializable
         {
             em.close();
         }
+    }
+
+//  DEPRECATED UNTIL FURTHER NOTICE    
+//    public List<Inventory> findLowStock()
+//    {
+//        EntityManager em = getEntityManager();
+//        Query query = em.createQuery("SELECT i FROM Inventory i WHERE i.invQty <= i.invLow");
+//        //Query query = em.createQuery("SELECT i.prodId, p.prodName FROM Inventory i JOIN Product p ON i.prodId = p.prodId WHERE i.invQty <= i.invLow");
+//        
+//        return query.getResultList();
+//    }
+    
+    public ResultSet findLowStock2()
+    {
+        ResultSet rs = null;
+        try
+        {
+            Connection connect = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/pharmacy?user=dp2&password=swe30010");
+            Statement stm = connect.createStatement();
+
+            String query = "SELECT inventory.prod_id, product.prod_name "
+                    + "FROM inventory "
+                    + "INNER JOIN product ON inventory.prod_id = product.prod_id "
+                    + "WHERE inventory.inv_qty <= inventory.inv_low;";
+            
+            rs = stm.executeQuery(query);
+            
+        } catch (SQLException ex)
+        {
+            System.out.println(ex);           
+        }
+        return rs;
+    }
+    
+//  DEPRECATED UNTIL FURTHER NOTICE
+//    public List<Inventory> findWarningStock()
+//    {
+//        EntityManager em = getEntityManager();
+//        Query query = em.createQuery("SELECT i FROM Inventory i WHERE i.invQty > i.invLow AND i.invQty <= i.invOrder");
+//        return query.getResultList();
+//    }
+    
+    public ResultSet findWarningStock2()
+    {
+        ResultSet rs = null;
+        try
+        {
+            Connection connect = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/pharmacy?user=dp2&password=swe30010");
+            Statement stm = connect.createStatement();
+
+            String query = "SELECT inventory.prod_id, product.prod_name "
+                    + "FROM inventory "
+                    + "INNER JOIN product ON inventory.prod_id = product.prod_id "
+                    + "WHERE ( inventory.inv_qty <= inventory.inv_order ) AND ( inventory.inv_qty > inventory.inv_low );";
+            
+            
+            rs = stm.executeQuery(query);
+            
+        } catch (SQLException ex)
+        {
+            System.out.println(ex);           
+        }
+        return rs;
     }
 
     public Inventory findInventory(Integer id)
