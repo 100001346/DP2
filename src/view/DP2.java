@@ -21,6 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
@@ -595,24 +597,27 @@ public class DP2 extends javax.swing.JFrame {
 
     private void GetAllSalesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_GetAllSalesActionPerformed
     {//GEN-HEADEREND:event_GetAllSalesActionPerformed
-        // TODO add your handling code here:
-        mainPanel.setVisible(false);
-        allSalePanel.setVisible(true);
-        List<Sale> results = saleController.findSaleEntities();
-        List<String[]> data = new ArrayList<>();
-        String[] columnNames = {"Sales ID", "Product ID", "Qty", "Price", "SaleDate"};
-        for (Sale sale : results) {
-            data.add(new String[]{
-                sale.getSalePK().getSaleId() + "",
-                sale.getSalePK().getProdId() + "",
-                sale.getSaleQty() + "",
-                sale.getSalePrice() + "",
-                sdf.format(sale.getSaleDate())
-            });
-            
+        try {
+            mainPanel.setVisible(false);
+            allSalePanel.setVisible(true);
+            List<Sale> results = saleController.findSaleEntities();
+            List<String[]> data = new ArrayList<>();
+            String[] columnNames = {"Sales ID", "Product ID", "Qty", "Price", "SaleDate"};
+            for (Sale sale : results) {
+                data.add(new String[]{
+                    sale.getSalePK().getSaleId() + "",
+                    sale.getSalePK().getProdId() + "",
+                    sale.getSaleQty() + "",
+                    sale.getSalePrice() + "",
+                    sdf.format(sale.getSaleDate())
+                });
+
+            }
+            JTable allSaleTable = new JTable(data.toArray(new Object[][]{}), columnNames);
+            allSaleScrollPane.getViewport().add(allSaleTable);
+        } catch (Exception e) {
+            showError("Database connection lost");
         }
-        JTable allSaleTable = new JTable(data.toArray(new Object[][]{}), columnNames);
-        allSaleScrollPane.getViewport().add(allSaleTable);
     }//GEN-LAST:event_GetAllSalesActionPerformed
 
     private void allSaleBackActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_allSaleBackActionPerformed
@@ -696,15 +701,17 @@ public class DP2 extends javax.swing.JFrame {
                 sale.setSaleQty(editedQty);
                 sale.setSalePrice(new BigDecimal(price));
                 sale.setSaleDate(date);
-                
+
                 Inventory inventory = inventoryController.findInventory(prodID);
                 int currentInv = inventory.getInvQty();
-                
-                if (saleQty > editedQty) 
+
+                if (saleQty > editedQty) {
                     currentInv += saleQty - editedQty;
-                if (saleQty < editedQty)
+                }
+                if (saleQty < editedQty) {
                     currentInv -= editedQty - saleQty;
-                
+                }
+
                 inventory.setInvQty(currentInv);
 
                 saleController.edit(sale);
@@ -761,7 +768,7 @@ public class DP2 extends javax.swing.JFrame {
                 this.showError("Invalid Sale Quantity");
                 return;
             }
-            
+
             //check parsing date
             if (!this.isDateString(txtDate)) {
                 this.showError("Invalid Sale Date");
@@ -771,15 +778,15 @@ public class DP2 extends javax.swing.JFrame {
             long saleID = Long.parseLong(txtSaleID);
             int prodID = Integer.parseInt(txtProdID);
             int qty = Integer.parseInt(txtQty);
-            
+
             //check product id
             Product p = productController.findProduct(prodID);
-            
+
             if (p == null) {
                 this.showError("Invalid Product ID");
                 return;
-            }  
-            
+            }
+
             BigDecimal price = p.getProdPrice();
             saleDate = this.formatStrToDate(txtDate);
 
@@ -788,14 +795,14 @@ public class DP2 extends javax.swing.JFrame {
             sale.setSalePrice(price);
             sale.setSaleDate(saleDate);
             sale.setProduct(p);
-            
+
             Inventory inventory = inventoryController.findInventory(prodID);
             int currentInv = inventory.getInvQty();
             inventory.setInvQty(currentInv - qty);
 
             saleController.create(sale);
             inventoryController.edit(inventory);
-            
+
             showMessage("Sale record added");
 
         } catch (PreexistingEntityException ex) {
@@ -850,61 +857,55 @@ public class DP2 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaleSearchActionPerformed
 
     private void btnStockAlertWarningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStockAlertWarningActionPerformed
-        // TODO add your handling code here:
-        mainPanel.setVisible(false);
-        outOfStockPanel.setVisible(true);
-
-        //List<Inventory> results = inventoryController.findLowStock();
-        List<String[]> data = new ArrayList<>();
-        String[] columnNames = {"Product ID", "Product Name"};
-
-        //LOW STOCK ALERT TABLE
-        ResultSet lsa = inventoryController.findLowStock2();
-
-        try
-        {
-            while (lsa.next())
-            {
-                data.add( new String[] {
+        try {
+            
+            
+            //List<Inventory> results = inventoryController.findLowStock();
+            List<String[]> data = new ArrayList<>();
+            String[] columnNames = {"Product ID", "Product Name"};
+            
+            //LOW STOCK ALERT TABLE
+            ResultSet lsa = inventoryController.findLowStock2();
+            
+            
+            while (lsa.next()) {
+                data.add(new String[]{
                     lsa.getString(1),
                     lsa.getString(2)
                 });
             }
-        }
-        catch (SQLException ex)
-        {
-            System.out.println(ex.toString());
-        }
-        JTable allLowStockTable = new JTable(data.toArray(new Object[][]{}), columnNames);
-        allLowStockAlert.getViewport().add(allLowStockTable);
-
-        // LOW STOCK WARNING TABLE
-        ResultSet lsw = inventoryController.findWarningStock2();
-        data.clear();
-
-        try
-        {
-            while (lsw.next())
-            {
-                data.add( new String[] {
+            
+            JTable allLowStockTable = new JTable(data.toArray(new Object[][]{}), columnNames);
+            allLowStockAlert.getViewport().add(allLowStockTable);
+            
+            // LOW STOCK WARNING TABLE
+            ResultSet lsw = inventoryController.findWarningStock2();
+            data.clear();
+            
+            
+            while (lsw.next()) {
+                data.add(new String[]{
                     lsw.getString(1),
                     lsw.getString(2)
                 });
             }
-        }
-        catch (SQLException ex)
-        {
-            System.out.println(ex.toString());
-        }
-        //        results = inventoryController.findWarningStock();
-        //        data = new ArrayList<>();
-        //        for (Inventory inventory : results) {
+            
+            //        results = inventoryController.findWarningStock();
+            //        data = new ArrayList<>();
+            //        for (Inventory inventory : results) {
             //            data.add(new String[] {
-                //                inventory.getProdId().toString() + ""
-                //            });
-        //        }
-        allLowStockTable = new JTable(data.toArray(new Object[][]{}), columnNames);
-        allLowStockWarning.getViewport().add(allLowStockTable);
+            //                inventory.getProdId().toString() + ""
+            //            });
+            //        }
+            allLowStockTable = new JTable(data.toArray(new Object[][]{}), columnNames);
+            allLowStockWarning.getViewport().add(allLowStockTable);
+            mainPanel.setVisible(false);
+            outOfStockPanel.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(DP2.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            showError("Database connection lost");
+        }
     }//GEN-LAST:event_btnStockAlertWarningActionPerformed
 
     private void btnInvAlertBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInvAlertBackActionPerformed
