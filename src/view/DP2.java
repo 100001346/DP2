@@ -380,6 +380,16 @@ public class DP2 extends javax.swing.JFrame {
 
         jLabel13.setText("SALE RECORD");
 
+        txtEditSaleId.setEditable(false);
+
+        txtEditProductId.setEditable(false);
+
+        txtEditSaleQty.setEditable(false);
+
+        txtEditSalePrice.setEditable(false);
+
+        txtEditSaleDate.setEditable(false);
+
         btnEditSaveSale.setText("Edit");
         btnEditSaveSale.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
