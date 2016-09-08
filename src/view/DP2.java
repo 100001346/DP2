@@ -207,6 +207,11 @@ public class DP2 extends javax.swing.JFrame {
         });
 
         btnMonthlyReport.setText("Monthly Sale Report");
+        btnMonthlyReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMonthlyReportActionPerformed(evt);
+            }
+        });
 
         btnWeeklyReport.setText("Weekly Sales Report");
 
@@ -515,16 +520,15 @@ public class DP2 extends javax.swing.JFrame {
             .addGroup(outOfStockPanelLayout.createSequentialGroup()
                 .addGroup(outOfStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(allLowStockAlert, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(outOfStockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(outOfStockPanelLayout.createSequentialGroup()
-                            .addGap(165, 165, 165)
-                            .addComponent(lblOutOfStock)
-                            .addGap(0, 0, Short.MAX_VALUE))
-                        .addGroup(outOfStockPanelLayout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(lblLowStockAlert)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnInvAlertBack)))
+                    .addGroup(outOfStockPanelLayout.createSequentialGroup()
+                        .addGap(165, 165, 165)
+                        .addComponent(lblOutOfStock)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(outOfStockPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblLowStockAlert)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnInvAlertBack))
                     .addComponent(allLowStockWarning))
                 .addContainerGap())
         );
@@ -690,6 +694,11 @@ public class DP2 extends javax.swing.JFrame {
                 double price = Double.parseDouble(txtPrice);
                 Date date = sdf.parse(txtDate);
 
+                if (editedQty <= 0) {
+                    showError("Sale quantity must be positive");
+                    return;
+                }
+
                 Product p = productController.findProduct(prodID);
                 if (p == null) {
                     showError("Product ID does not exist");
@@ -704,6 +713,11 @@ public class DP2 extends javax.swing.JFrame {
 
                 Inventory inventory = inventoryController.findInventory(prodID);
                 int currentInv = inventory.getInvQty();
+
+                if (currentInv < editedQty) {
+                    showError("Not enough product stock.\n"
+                            + "Current stock quantity: " + currentInv);
+                }
 
                 if (saleQty > editedQty) {
                     currentInv += saleQty - editedQty;
@@ -779,6 +793,11 @@ public class DP2 extends javax.swing.JFrame {
             int prodID = Integer.parseInt(txtProdID);
             int qty = Integer.parseInt(txtQty);
 
+            if (qty <= 0) {
+                this.showError("Sale quantity must be positive");
+                return;
+            }
+
             //check product id
             Product p = productController.findProduct(prodID);
 
@@ -798,6 +817,11 @@ public class DP2 extends javax.swing.JFrame {
 
             Inventory inventory = inventoryController.findInventory(prodID);
             int currentInv = inventory.getInvQty();
+
+            if (currentInv < qty) {
+                showError("Not enough product stock.\n"
+                        + "Current stock quantity: " + currentInv);
+            }
             inventory.setInvQty(currentInv - qty);
 
             saleController.create(sale);
@@ -858,38 +882,35 @@ public class DP2 extends javax.swing.JFrame {
 
     private void btnStockAlertWarningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStockAlertWarningActionPerformed
         try {
-            
-            
+
             //List<Inventory> results = inventoryController.findLowStock();
             List<String[]> data = new ArrayList<>();
             String[] columnNames = {"Product ID", "Product Name"};
-            
+
             //LOW STOCK ALERT TABLE
             ResultSet lsa = inventoryController.findLowStock2();
-            
-            
+
             while (lsa.next()) {
                 data.add(new String[]{
                     lsa.getString(1),
                     lsa.getString(2)
                 });
             }
-            
+
             JTable allLowStockTable = new JTable(data.toArray(new Object[][]{}), columnNames);
             allLowStockAlert.getViewport().add(allLowStockTable);
-            
+
             // LOW STOCK WARNING TABLE
             ResultSet lsw = inventoryController.findWarningStock2();
             data.clear();
-            
-            
+
             while (lsw.next()) {
                 data.add(new String[]{
                     lsw.getString(1),
                     lsw.getString(2)
                 });
             }
-            
+
             //        results = inventoryController.findWarningStock();
             //        data = new ArrayList<>();
             //        for (Inventory inventory : results) {
@@ -912,6 +933,10 @@ public class DP2 extends javax.swing.JFrame {
         mainPanel.setVisible(true);
         outOfStockPanel.setVisible(false);
     }//GEN-LAST:event_btnInvAlertBackActionPerformed
+
+    private void btnMonthlyReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMonthlyReportActionPerformed
+
+    }//GEN-LAST:event_btnMonthlyReportActionPerformed
 
     private boolean isDateString(String s) {
         try {
