@@ -717,6 +717,7 @@ public class DP2 extends javax.swing.JFrame {
                 if (currentInv < editedQty) {
                     showError("Not enough product stock.\n"
                             + "Current stock quantity: " + currentInv);
+                    return;
                 }
 
                 if (saleQty > editedQty) {
@@ -821,6 +822,7 @@ public class DP2 extends javax.swing.JFrame {
             if (currentInv < qty) {
                 showError("Not enough product stock.\n"
                         + "Current stock quantity: " + currentInv);
+                return;
             }
             inventory.setInvQty(currentInv - qty);
 
