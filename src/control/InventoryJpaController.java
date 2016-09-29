@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -234,6 +235,12 @@ public class InventoryJpaController implements Serializable
 //        
 //        return query.getResultList();
 //    }
+    
+    public List<Inventory> findAll() {
+        EntityManager em = getEntityManager();
+        TypedQuery query = em.createNamedQuery("Inventory.findAll", Inventory.class);
+        return query.getResultList();
+    }
     
     public ResultSet findLowStock2()
     {

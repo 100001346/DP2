@@ -56,6 +56,7 @@ public class DP2 extends javax.swing.JFrame {
         addSalePanel.setVisible(false);
         editSalePanel.setVisible(false);
         outOfStockPanel.setVisible(false);
+        addYearsToComboBox();
 
     }
 
@@ -127,6 +128,8 @@ public class DP2 extends javax.swing.JFrame {
         inventoryPanel = new javax.swing.JPanel();
         monthlySaleReport = new javax.swing.JPanel();
         weeklySaleReport = new javax.swing.JPanel();
+        monthComboBox = new javax.swing.JComboBox<>();
+        yearComboBox = new javax.swing.JComboBox<>();
         predictionPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -590,15 +593,34 @@ public class DP2 extends javax.swing.JFrame {
             .addGap(0, 361, Short.MAX_VALUE)
         );
 
+        monthComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select Month--", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        monthComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                monthComboBoxActionPerformed(evt);
+            }
+        });
+
+        yearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select Year--" }));
+
         javax.swing.GroupLayout weeklySaleReportLayout = new javax.swing.GroupLayout(weeklySaleReport);
         weeklySaleReport.setLayout(weeklySaleReportLayout);
         weeklySaleReportLayout.setHorizontalGroup(
             weeklySaleReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 604, Short.MAX_VALUE)
+            .addGroup(weeklySaleReportLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(monthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(yearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(415, Short.MAX_VALUE))
         );
         weeklySaleReportLayout.setVerticalGroup(
             weeklySaleReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(weeklySaleReportLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(weeklySaleReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(monthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout predictionPanelLayout = new javax.swing.GroupLayout(predictionPanel);
@@ -609,7 +631,7 @@ public class DP2 extends javax.swing.JFrame {
         );
         predictionPanelLayout.setVerticalGroup(
             predictionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 410, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1019,6 +1041,10 @@ public class DP2 extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnMonthlyReportActionPerformed
 
+    private void monthComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_monthComboBoxActionPerformed
+
     private boolean isDateString(String s) {
         try {
             Date d = this.formatStrToDate(s);
@@ -1079,6 +1105,13 @@ public class DP2 extends javax.swing.JFrame {
     private void showMessage(String msg) {
         JOptionPane.showMessageDialog(rootPane,
                 msg, null, JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void addYearsToComboBox() {
+        List<Integer> yearList = saleController.getSaleYear();
+        for (Integer year : yearList) {
+            yearComboBox.addItem(year.toString());
+        }
     }
 
     /**
@@ -1163,6 +1196,7 @@ public class DP2 extends javax.swing.JFrame {
     private javax.swing.JLabel lblSaleId;
     private javax.swing.JLabel lblSaleSearch;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JComboBox<String> monthComboBox;
     private javax.swing.JPanel monthlySaleReport;
     private javax.swing.JPanel outOfStockPanel;
     private javax.swing.JPanel predictionPanel;
@@ -1179,5 +1213,6 @@ public class DP2 extends javax.swing.JFrame {
     private javax.swing.JTextField txtSearchProdId;
     private javax.swing.JTextField txtSearchSaleId;
     private javax.swing.JPanel weeklySaleReport;
+    private javax.swing.JComboBox<String> yearComboBox;
     // End of variables declaration//GEN-END:variables
 }

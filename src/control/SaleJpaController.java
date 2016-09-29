@@ -229,4 +229,9 @@ public class SaleJpaController implements Serializable
         }
     }
     
+    public List<Integer> getSaleYear() {
+        EntityManager em = getEntityManager();
+        return em.createQuery("select distinct func('year', s.saleDate) from Sale s").getResultList();
+    }
+    
 }
