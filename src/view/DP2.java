@@ -85,6 +85,8 @@ public class DP2 extends javax.swing.JFrame {
         btnSaleSearchPanel = new javax.swing.JButton();
         GetAllSales = new javax.swing.JButton();
         btnStockAlertWarning = new javax.swing.JButton();
+        btnSalePrediction = new javax.swing.JButton();
+        btnInventoryReport = new javax.swing.JButton();
         allSalePanel = new javax.swing.JPanel();
         allSaleScrollPane = new javax.swing.JScrollPane();
         allSaleBack = new javax.swing.JButton();
@@ -240,6 +242,10 @@ public class DP2 extends javax.swing.JFrame {
             }
         });
 
+        btnSalePrediction.setText("Sale Prediction");
+
+        btnInventoryReport.setText("Inventory Report");
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -262,7 +268,11 @@ public class DP2 extends javax.swing.JFrame {
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(GetAllSales)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnStockAlertWarning)))
+                        .addComponent(btnStockAlertWarning))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(btnSalePrediction)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnInventoryReport)))
                 .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
@@ -282,7 +292,11 @@ public class DP2 extends javax.swing.JFrame {
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(GetAllSales)
                     .addComponent(btnStockAlertWarning))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalePrediction)
+                    .addComponent(btnInventoryReport))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
         allSaleBack.setText("Back");
@@ -1120,7 +1134,9 @@ public class DP2 extends javax.swing.JFrame {
     private javax.swing.JButton btnClearSaleSearch;
     private javax.swing.JButton btnEditSaveSale;
     private javax.swing.JButton btnInvAlertBack;
+    private javax.swing.JButton btnInventoryReport;
     private javax.swing.JButton btnMonthlyReport;
+    private javax.swing.JButton btnSalePrediction;
     private javax.swing.JButton btnSaleSearch;
     private javax.swing.JButton btnSaleSearchBack;
     private javax.swing.JButton btnSaleSearchPanel;

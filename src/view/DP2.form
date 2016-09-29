@@ -232,6 +232,11 @@
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="btnStockAlertWarning" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="btnSalePrediction" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btnInventoryReport" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -257,7 +262,12 @@
                       <Component id="GetAllSales" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnStockAlertWarning" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="43" max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnSalePrediction" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnInventoryReport" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="91" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -312,6 +322,16 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStockAlertWarningActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnSalePrediction">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Sale Prediction"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnInventoryReport">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Inventory Report"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
