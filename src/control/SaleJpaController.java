@@ -15,6 +15,11 @@ import javax.persistence.criteria.Root;
 import entity.Product;
 import entity.Sale;
 import entity.SalePK;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -232,6 +237,25 @@ public class SaleJpaController implements Serializable
     public List<Integer> getSaleYear() {
         EntityManager em = getEntityManager();
         return em.createQuery("select distinct func('year', s.saleDate) from Sale s").getResultList();
+    }
+    
+    public ResultSet getSalesPrediction(int salesIncrease)
+    {
+        ResultSet rs = null;
+        try
+        {
+            Connection connect = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/pharmacy?user=dp2&password=swe30010");
+            Statement stm = connect.createStatement();
+
+            String query = "SELECT product.prod_desc, ROUND( ( SUM(sale.sale_qty) / COUNT(EXTRACT(MONTH FROM sale.sale_date)) ) * (1 + " + salesIncrease + " / 100) , 2 ) FROM product INNER JOIN sale ON product.prod_id = sale.prod_id GROUP BY product.prod_desc;";
+            
+            rs = stm.executeQuery(query);
+            
+        } catch (SQLException ex)
+        {
+            System.out.println(ex);           
+        }
+        return rs;
     }
     
 }
