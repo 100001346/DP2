@@ -9,6 +9,7 @@ import control.InventoryJpaController;
 import control.ProductJpaController;
 import control.SaleJpaController;
 import control.exceptions.PreexistingEntityException;
+import control.Report;
 import entity.Inventory;
 import entity.Product;
 import entity.Sale;
@@ -18,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -1133,7 +1135,14 @@ public class DP2 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInvAlertBackActionPerformed
 
     private void btnMonthlyReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMonthlyReportActionPerformed
+        Report report = new Report();
+        showMessage("Monthly Report File Created");
+        try {
+            report.MonthlyReport();
 
+        }catch(IOException ex){}
+         catch(SQLException sqlex) {}
+        //TODO exception handling
     }//GEN-LAST:event_btnMonthlyReportActionPerformed
 
     private void monthComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthComboBoxActionPerformed
