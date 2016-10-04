@@ -22,6 +22,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
@@ -254,6 +256,51 @@ public class InventoryJpaController implements Serializable
                     + "FROM inventory "
                     + "INNER JOIN product ON inventory.prod_id = product.prod_id "
                     + "WHERE inventory.inv_qty <= inventory.inv_low;";
+            
+            rs = stm.executeQuery(query);
+            
+        } catch (SQLException ex)
+        {
+            System.out.println(ex);           
+        }
+        return rs;
+    }
+    
+    public String getStockStatusForPrediction(String prodId, int predictedSale) {
+        String result = "In stock";
+        try {
+            ResultSet rs = getStockByProdId(prodId);
+            if (rs.next()) {
+                int qty = rs.getInt("inv_qty");
+                int low = rs.getInt("inv_low");
+                int order = rs.getInt("inv_order");
+        
+                if (predictedSale > qty)
+                    result = "Out of stock";
+                else {
+                    if (qty <= low)
+                        result = "Low stock";
+                    else if (qty < order)
+                        result = "Order to restock";
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InventoryJpaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+    
+    public ResultSet getStockByProdId(String prodId) {
+        ResultSet rs = null;
+        try
+        {
+            Connection connect = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/pharmacy?user=dp2&password=swe30010");
+            Statement stm = connect.createStatement();
+
+            String query = "SELECT * "
+                    + "FROM inventory "
+                    + "INNER JOIN product ON inventory.prod_id = product.prod_id "
+                    + "WHERE inventory.prod_id = " + prodId;
             
             rs = stm.executeQuery(query);
             

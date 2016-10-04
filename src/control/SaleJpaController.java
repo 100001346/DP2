@@ -239,7 +239,34 @@ public class SaleJpaController implements Serializable
         return em.createQuery("select distinct func('year', s.saleDate) from Sale s").getResultList();
     }
     
-    public ResultSet getSalesPrediction(int salesIncrease)
+    public ResultSet getSalePrediction(int salesIncrease, String month, String year) {
+        
+        
+        ResultSet rs = null;
+        try
+        {
+            Connection connect = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/pharmacy?user=dp2&password=swe30010");
+            Statement stm = connect.createStatement();
+            
+            String query = "SELECT product.prod_id, product.prod_name, ROUND( ( SUM(sale.sale_qty) / COUNT(EXTRACT(MONTH FROM sale.sale_date)) ) * (1 + " + salesIncrease + " / 100) , 2 ) "
+                    +   "FROM product "
+                    +   "INNER JOIN sale "
+                    +   "ON product.prod_id = sale.prod_id "
+                    +   "WHERE month(sale.sale_date) = " + month + " and year(sale.sale_date) < " + year + " "
+                    +   "GROUP BY product.prod_id, product.prod_name";
+ 
+            rs = stm.executeQuery(query);
+            
+        } catch (SQLException ex)
+        {
+            System.out.println(ex);           
+        }
+        return rs;
+    }
+    
+    
+    
+    public ResultSet getSalesPredictionByCategory(int salesIncrease)
     {
         ResultSet rs = null;
         try
