@@ -48,16 +48,13 @@ public class Report {
         List<Sale> results = saleController.findSaleEntities();
         List<String[]> data = new ArrayList<>();
         
-        Date date = new Date("01/06/2016");
+        
         try {
-
+            Date date = sdf.parse("01/06/2016");
             
             String[] columnNames = {"Sales ID", "Product ID", "Qty", "Price", "SaleDate"};
             for (Sale sale : results) {
                 
-                //Errror here with .after(date) either the date 
-                //isn't applying correctly as the if statement 
-                //always passes as true. 
                 if(sale.getSaleDate().after(date)){
                     data.add(new String[]{
                     sale.getSalePK().getSaleId() + "",
