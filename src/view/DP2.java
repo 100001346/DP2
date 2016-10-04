@@ -1229,11 +1229,12 @@ public class DP2 extends javax.swing.JFrame {
             
             ResultSet sp = saleController.getSalePrediction(percentage, month, year);
            
-            if (!sp.next()) {
+            if (!sp.isBeforeFirst()) {
                 showMessage("No data for selected month and year");
                 panelSalesPredictionByProd.setVisible(false);
                 return;
             }
+            
             while (sp.next()) {
                 String status = inventoryController.getStockStatusForPrediction(sp.getString(1), sp.getInt(3));
                 data.add(new String[]{
