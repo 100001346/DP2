@@ -10,11 +10,12 @@ import control.ProductJpaController;
 import control.SaleJpaController;
 import control.exceptions.PreexistingEntityException;
 import control.Report;
-import control.Sales;
 import entity.Inventory;
 import entity.Product;
 import entity.Sale;
 import entity.SalePK;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,27 +24,20 @@ import java.text.SimpleDateFormat;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
 
 /**
  *
@@ -77,6 +71,7 @@ public class DP2 extends javax.swing.JFrame {
         weeklySaleReport.setVisible(false);
         monthlySaleReport.setVisible(false);
         inventoryPanel.setVisible(false);
+        saleInputFromFilePanel.setVisible(false);
         addYearsToComboBox(yearComboBox);
         addYearsToComboBox(saleReportYearComboBox);
         addDatePicker();
@@ -110,6 +105,7 @@ public class DP2 extends javax.swing.JFrame {
         btnStockAlertWarning = new javax.swing.JButton();
         btnSalePrediction = new javax.swing.JButton();
         btnInventoryReport = new javax.swing.JButton();
+        btnSaleInputFromFile = new javax.swing.JButton();
         allSalePanel = new javax.swing.JPanel();
         allSaleScrollPane = new javax.swing.JScrollPane();
         allSaleBack = new javax.swing.JButton();
@@ -149,8 +145,8 @@ public class DP2 extends javax.swing.JFrame {
         btnInvAlertBack = new javax.swing.JButton();
         inventoryPanel = new javax.swing.JPanel();
         monthlySaleReport = new javax.swing.JPanel();
-        saleReportMonthComboBox = new javax.swing.JComboBox<String>();
-        saleReportYearComboBox = new javax.swing.JComboBox<String>();
+        saleReportMonthComboBox = new javax.swing.JComboBox<>();
+        saleReportYearComboBox = new javax.swing.JComboBox<>();
         lblMonthlySaleReport = new javax.swing.JLabel();
         btnShowMonthlyReport = new javax.swing.JButton();
         btnPrintMonthlyReport = new javax.swing.JButton();
@@ -158,8 +154,8 @@ public class DP2 extends javax.swing.JFrame {
         btnMonthlyReportBack = new javax.swing.JButton();
         weeklySaleReport = new javax.swing.JPanel();
         lblWeeklySaleReport = new javax.swing.JLabel();
-        saleReportWeekComboBox = new javax.swing.JComboBox<String>();
-        saleReportWeekYearComboBox = new javax.swing.JComboBox<String>();
+        saleReportWeekComboBox = new javax.swing.JComboBox<>();
+        saleReportWeekYearComboBox = new javax.swing.JComboBox<>();
         btnShowWeeklyReport = new javax.swing.JButton();
         btnPrintWeeklyReport = new javax.swing.JButton();
         weeklyReportPanel = new javax.swing.JScrollPane();
@@ -176,8 +172,13 @@ public class DP2 extends javax.swing.JFrame {
         txtSalesIncreaseByProd = new javax.swing.JTextField();
         panelSalesPredictionByProd = new javax.swing.JScrollPane();
         btnUpdatePredictionByProd = new javax.swing.JButton();
-        monthComboBox = new javax.swing.JComboBox<String>();
-        yearComboBox = new javax.swing.JComboBox<String>();
+        monthComboBox = new javax.swing.JComboBox<>();
+        yearComboBox = new javax.swing.JComboBox<>();
+        saleInputFromFilePanel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        txtSaleInputFileName = new javax.swing.JTextField();
+        btnExecuteSaleInput = new javax.swing.JButton();
+        btnSaleInputBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -311,6 +312,13 @@ public class DP2 extends javax.swing.JFrame {
             }
         });
 
+        btnSaleInputFromFile.setText("Sale Input From File");
+        btnSaleInputFromFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaleInputFromFileActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -337,7 +345,10 @@ public class DP2 extends javax.swing.JFrame {
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(btnSalePrediction)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnInventoryReport)))
+                        .addComponent(btnInventoryReport))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(btnSaleInputFromFile)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
@@ -361,7 +372,9 @@ public class DP2 extends javax.swing.JFrame {
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalePrediction)
                     .addComponent(btnInventoryReport))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSaleInputFromFile)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         allSaleBack.setText("Back");
@@ -644,14 +657,14 @@ public class DP2 extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        saleReportMonthComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select Month--", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        saleReportMonthComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select Month--", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
         saleReportMonthComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saleReportMonthComboBoxActionPerformed(evt);
             }
         });
 
-        saleReportYearComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select Year--" }));
+        saleReportYearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select Year--" }));
         saleReportYearComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saleReportYearComboBoxActionPerformed(evt);
@@ -723,14 +736,14 @@ public class DP2 extends javax.swing.JFrame {
 
         lblWeeklySaleReport.setText("WEEKLY SALE REPORT");
 
-        saleReportWeekComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select Week--" }));
+        saleReportWeekComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select Week--" }));
         saleReportWeekComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saleReportWeekComboBoxActionPerformed(evt);
             }
         });
 
-        saleReportWeekYearComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select Year--" }));
+        saleReportWeekYearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select Year--" }));
         saleReportWeekYearComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saleReportWeekYearComboBoxActionPerformed(evt);
@@ -838,14 +851,14 @@ public class DP2 extends javax.swing.JFrame {
             }
         });
 
-        monthComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select Month--", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        monthComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select Month--", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
         monthComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 monthComboBoxActionPerformed(evt);
             }
         });
 
-        yearComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select Year--" }));
+        yearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select Year--" }));
 
         javax.swing.GroupLayout predictionPanelLayout = new javax.swing.GroupLayout(predictionPanel);
         predictionPanel.setLayout(predictionPanelLayout);
@@ -908,12 +921,60 @@ public class DP2 extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jLabel2.setText("File Name");
+
+        txtSaleInputFileName.setText("output.txt");
+
+        btnExecuteSaleInput.setText("Execute");
+        btnExecuteSaleInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExecuteSaleInputActionPerformed(evt);
+            }
+        });
+
+        btnSaleInputBack.setText("Back");
+        btnSaleInputBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaleInputBackActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout saleInputFromFilePanelLayout = new javax.swing.GroupLayout(saleInputFromFilePanel);
+        saleInputFromFilePanel.setLayout(saleInputFromFilePanelLayout);
+        saleInputFromFilePanelLayout.setHorizontalGroup(
+            saleInputFromFilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(saleInputFromFilePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(saleInputFromFilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(saleInputFromFilePanelLayout.createSequentialGroup()
+                        .addComponent(btnExecuteSaleInput)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSaleInputBack))
+                    .addComponent(txtSaleInputFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        saleInputFromFilePanelLayout.setVerticalGroup(
+            saleInputFromFilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(saleInputFromFilePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(saleInputFromFilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtSaleInputFileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(saleInputFromFilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnExecuteSaleInput)
+                    .addComponent(btnSaleInputBack))
+                .addContainerGap(134, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(allSalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -921,7 +982,10 @@ public class DP2 extends javax.swing.JFrame {
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(saleSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(saleSearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(saleInputFromFilePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -955,7 +1019,9 @@ public class DP2 extends javax.swing.JFrame {
                         .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(allSalePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(465, 465, 465))
+                        .addGap(18, 18, 18)
+                        .addComponent(saleInputFromFilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(314, 314, 314))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(outOfStockPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1310,8 +1376,8 @@ public class DP2 extends javax.swing.JFrame {
         mainPanel.setVisible(false);
         monthlySaleReport.setVisible(true);
     }//GEN-LAST:event_btnMonthlyReportActionPerformed
-    
-    
+
+
     private void monthComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_monthComboBoxActionPerformed
@@ -1419,7 +1485,6 @@ public class DP2 extends javax.swing.JFrame {
 
     private void btnShowMonthlyReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowMonthlyReportActionPerformed
         Report report = new Report();
-        
 
         if (saleReportMonthComboBox.getSelectedIndex() == 0) {
             showMessage("Please select month");
@@ -1435,45 +1500,45 @@ public class DP2 extends javax.swing.JFrame {
         String year = saleReportYearComboBox.getSelectedItem().toString();
 
         List<String[]> data = report.retrieveDatabase(month, year);
-        
+
         if (data.isEmpty()) {
             showMessage("No data for selected month and year");
             monthlyReportPanel.setVisible(false);
             return;
         }
-        
+
         String[] columnNames = {"Sales ID", "Product ID", "Qty", "Price", "SaleDate"};
         JTable table = new JTable(data.toArray(new Object[][]{}), columnNames);
         monthlyReportPanel.getViewport().add(table);
         monthlyReportPanel.setVisible(true);
         getContentPane().validate();
         getContentPane().repaint();
-        
-        
+
+
     }//GEN-LAST:event_btnShowMonthlyReportActionPerformed
 
     private void btnMonthlyReportBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMonthlyReportBackActionPerformed
         mainPanel.setVisible(true);
         monthlyReportPanel.setVisible(false);
         monthlySaleReport.setVisible(false);
-        
+
     }//GEN-LAST:event_btnMonthlyReportBackActionPerformed
 
-    
+
     private void btnPrintMonthlyReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintMonthlyReportActionPerformed
         try {
             Report report = new Report();
-            
+
             if (saleReportMonthComboBox.getSelectedIndex() == 0) {
                 showMessage("Please select month");
                 return;
             }
-            
+
             if (saleReportYearComboBox.getSelectedIndex() == 0) {
                 showMessage("Please select year");
                 return;
             }
-            
+
             String month = saleReportMonthComboBox.getSelectedItem().toString();
             String year = saleReportYearComboBox.getSelectedItem().toString();
             List<String[]> data = report.retrieveDatabase(month, year);
@@ -1488,7 +1553,7 @@ public class DP2 extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(DP2.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_btnPrintMonthlyReportActionPerformed
 
     private void btnWeeklyReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWeeklyReportActionPerformed
@@ -1501,7 +1566,6 @@ public class DP2 extends javax.swing.JFrame {
 
     private void btnShowWeeklyReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowWeeklyReportActionPerformed
         Report report = new Report();
-        
 
         if (saleReportWeekComboBox.getSelectedIndex() == 0) {
             showMessage("Please select Week");
@@ -1517,13 +1581,13 @@ public class DP2 extends javax.swing.JFrame {
         String year = saleReportWeekYearComboBox.getSelectedItem().toString();
 
         List<String[]> data = report.retrieveWeeklyDatabase(week, year);
-        
+
         if (data.isEmpty()) {
             showMessage("No data for selected week and year");
             weeklyReportPanel.setVisible(false);
             return;
         }
-        
+
         String[] columnNames = {"Sales ID", "Product ID", "Qty", "Price", "SaleDate"};
         JTable table = new JTable(data.toArray(new Object[][]{}), columnNames);
         weeklyReportPanel.getViewport().add(table);
@@ -1535,17 +1599,17 @@ public class DP2 extends javax.swing.JFrame {
     private void btnPrintWeeklyReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintWeeklyReportActionPerformed
         try {
             Report report = new Report();
-            
+
             if (saleReportWeekComboBox.getSelectedIndex() == 0) {
                 showMessage("Please select month");
                 return;
             }
-            
+
             if (saleReportWeekYearComboBox.getSelectedIndex() == 0) {
                 showMessage("Please select Week");
                 return;
             }
-            
+
             String week = saleReportWeekComboBox.getSelectedItem().toString();
             String year = saleReportWeekYearComboBox.getSelectedItem().toString();
             List<String[]> data = report.retrieveWeeklyDatabase(week, year);
@@ -1565,7 +1629,7 @@ public class DP2 extends javax.swing.JFrame {
     private void btnWeeklyReportBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWeeklyReportBackActionPerformed
         weeklySaleReport.setVisible(false);
         mainPanel.setVisible(true);
-        
+
     }//GEN-LAST:event_btnWeeklyReportBackActionPerformed
 
     private void saleReportWeekComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saleReportWeekComboBoxActionPerformed
@@ -1581,19 +1645,105 @@ public class DP2 extends javax.swing.JFrame {
     }//GEN-LAST:event_saleReportYearComboBoxActionPerformed
 
     private void btnInventoryReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryReportActionPerformed
-  
+
         try {
             Report report = new Report();
-             
-           report.inventoryReport();
-           showMessage("Inventory Report Created");
+
+            report.inventoryReport();
+            showMessage("Inventory Report Created");
         } catch (IOException ex) {
             Logger.getLogger(DP2.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(DP2.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_btnInventoryReportActionPerformed
+
+    private void btnExecuteSaleInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExecuteSaleInputActionPerformed
+        String txtSaleID = "";
+        String txtProdID = "";
+        try {
+            String filename = txtSaleInputFileName.getText();
+            Scanner scanner = new Scanner(new File(filename));
+            int saleRecords = 0;
+            while (scanner.hasNext()) {
+                String line = scanner.nextLine();
+                if (line.contains("Sales ID")) {
+                    txtSaleID = line.split(" ")[2];
+                    txtProdID = scanner.nextLine().split(" ")[2];
+                    String txtQty = scanner.nextLine().split(" ")[1];
+                    String txtPrice = scanner.nextLine().split(" ")[1];
+                    String txtSaleDate = scanner.nextLine().split(" ")[1];
+
+//                    System.out.println("At Sale Id: " + txtSaleID);
+//                    System.out.println("Prod Id: " + txtProdID);
+//                    System.out.println("Qty: " + txtQty);
+//                    System.out.println("Price: " + txtPrice);
+//                    System.out.println("Sale date: " + txtSaleDate);
+                    long saleId = Long.parseLong(txtSaleID);
+                    int prodId = Integer.parseInt(txtProdID);
+                    int qty = Integer.parseInt(txtQty);
+                    BigDecimal price = new BigDecimal(Double.parseDouble(txtPrice));
+                    Date saleDate = sdf.parse(txtSaleDate);
+
+                    if (qty <= 0) {
+                        this.showError("Invalid sale quantity for sale number: " + txtSaleID);
+                        return;
+                    }
+
+                    //check product id
+                    Product p = productController.findProduct(prodId);
+                    Sale checkSale = saleController.findSale(new SalePK(saleId, prodId));
+
+                    if (p == null) {
+                        this.showError("Invalid product with id number: " + txtProdID);
+                        return;
+                    }
+
+                    if (checkSale != null) {
+//                        System.out.println("Skipped " + txtSaleID);
+                        continue;
+                    }
+
+                    Sale sale = new Sale(saleId, prodId);
+                    sale.setSaleQty(qty);
+                    sale.setSalePrice(price);
+                    sale.setSaleDate(saleDate);
+                    sale.setProduct(p);
+
+                    saleController.create(sale);
+                    saleRecords++;
+
+                }
+            }
+
+            if (saleRecords == 0) {
+                showMessage("No sale records found. Please check the source file");
+            } else {
+                showMessage(saleRecords + " sale records added");
+            }
+        } catch (FileNotFoundException ex) {
+            showError("File does not exist");
+        } catch (ParseException ex) {
+            showError("Check sale date format of sale: \n ID: " + txtSaleID + "\n Product ID: " + txtProdID);
+        } catch (PreexistingEntityException ex) {
+            showError("Sale record exists (sale number: " + txtSaleID + ")");
+        } catch (NumberFormatException ex) {
+            showError("Check details of sale: \n ID: " + txtSaleID + "\n Product ID: " + txtProdID);
+        } catch (Exception ex) {
+            showError("Database connection lost");
+        }
+    }//GEN-LAST:event_btnExecuteSaleInputActionPerformed
+
+    private void btnSaleInputBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaleInputBackActionPerformed
+        mainPanel.setVisible(true);
+        saleInputFromFilePanel.setVisible(false);
+    }//GEN-LAST:event_btnSaleInputBackActionPerformed
+
+    private void btnSaleInputFromFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaleInputFromFileActionPerformed
+        mainPanel.setVisible(false);
+        saleInputFromFilePanel.setVisible(true);
+    }//GEN-LAST:event_btnSaleInputFromFileActionPerformed
 
     private boolean isDateString(String s) {
         try {
@@ -1664,7 +1814,7 @@ public class DP2 extends javax.swing.JFrame {
             comboBox.addItem(year.toString());
         }
     }
-    
+
     private void addDatePicker() {
         weeklySaleReport.add(new JButton("Test"));
         weeklySaleReport.revalidate();
@@ -1734,12 +1884,15 @@ public class DP2 extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelSaveSale;
     private javax.swing.JButton btnClearSaleSearch;
     private javax.swing.JButton btnEditSaveSale;
+    private javax.swing.JButton btnExecuteSaleInput;
     private javax.swing.JButton btnInvAlertBack;
     private javax.swing.JButton btnInventoryReport;
     private javax.swing.JButton btnMonthlyReport;
     private javax.swing.JButton btnMonthlyReportBack;
     private javax.swing.JButton btnPrintMonthlyReport;
     private javax.swing.JButton btnPrintWeeklyReport;
+    private javax.swing.JButton btnSaleInputBack;
+    private javax.swing.JButton btnSaleInputFromFile;
     private javax.swing.JButton btnSalePrediction;
     private javax.swing.JButton btnSaleSearch;
     private javax.swing.JButton btnSaleSearchBack;
@@ -1755,6 +1908,7 @@ public class DP2 extends javax.swing.JFrame {
     private javax.swing.JPanel inventoryPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel lblAddProductId;
     private javax.swing.JLabel lblAddSaleDate;
@@ -1785,6 +1939,7 @@ public class DP2 extends javax.swing.JFrame {
     private javax.swing.JScrollPane panelSalesPredictionByCat;
     private javax.swing.JScrollPane panelSalesPredictionByProd;
     private javax.swing.JPanel predictionPanel;
+    private javax.swing.JPanel saleInputFromFilePanel;
     private javax.swing.JComboBox<String> saleReportMonthComboBox;
     private javax.swing.JComboBox<String> saleReportWeekComboBox;
     private javax.swing.JComboBox<String> saleReportWeekYearComboBox;
@@ -1799,6 +1954,7 @@ public class DP2 extends javax.swing.JFrame {
     private javax.swing.JTextField txtEditSaleId;
     private javax.swing.JTextField txtEditSalePrice;
     private javax.swing.JTextField txtEditSaleQty;
+    private javax.swing.JTextField txtSaleInputFileName;
     private javax.swing.JTextField txtSalesIncreaseByCat;
     private javax.swing.JTextField txtSalesIncreaseByProd;
     private javax.swing.JTextField txtSearchProdId;
@@ -1812,14 +1968,14 @@ public class DP2 extends javax.swing.JFrame {
 
         private String datePattern = "yyyy-MM-dd";
         private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
-        
+
         public DateLabelFormatter() {
         }
 
         @Override
         public Object stringToValue(String text) throws ParseException {
             return dateFormatter.parseObject(text);
-    }
+        }
 
         @Override
         public String valueToString(Object value) throws ParseException {
