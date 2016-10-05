@@ -297,4 +297,16 @@ public class SaleJpaController implements Serializable
                 .getResultList();
     }
     
+    public List<Sale> getSaleByWeekAndYear(String week, String year) {
+        EntityManager em = getEntityManager();
+        String query =  "SELECT s "
+                +       "FROM Sale s "
+                +       "WHERE func('week', s.saleDate) = :saleWeek "
+                +       "AND func('year', s.saleDate) = :saleYear";
+        return em.createQuery(query)
+                .setParameter("saleWeek", week)
+                .setParameter("saleYear", year)
+                .getResultList();
+    }
+    
 }

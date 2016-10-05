@@ -149,14 +149,21 @@ public class DP2 extends javax.swing.JFrame {
         btnInvAlertBack = new javax.swing.JButton();
         inventoryPanel = new javax.swing.JPanel();
         monthlySaleReport = new javax.swing.JPanel();
-        saleReportMonthComboBox = new javax.swing.JComboBox<>();
-        saleReportYearComboBox = new javax.swing.JComboBox<>();
+        saleReportMonthComboBox = new javax.swing.JComboBox<String>();
+        saleReportYearComboBox = new javax.swing.JComboBox<String>();
         lblMonthlySaleReport = new javax.swing.JLabel();
         btnShowMonthlyReport = new javax.swing.JButton();
         btnPrintMonthlyReport = new javax.swing.JButton();
         monthlyReportPanel = new javax.swing.JScrollPane();
         btnMonthlyReportBack = new javax.swing.JButton();
         weeklySaleReport = new javax.swing.JPanel();
+        lblWeeklySaleReport = new javax.swing.JLabel();
+        saleReportWeekComboBox = new javax.swing.JComboBox<String>();
+        saleReportWeekYearComboBox = new javax.swing.JComboBox<String>();
+        btnShowWeeklyReport = new javax.swing.JButton();
+        btnPrintWeeklyReport = new javax.swing.JButton();
+        weeklyReportPanel = new javax.swing.JScrollPane();
+        btnWeeklyReportBack = new javax.swing.JButton();
         predictionPanel = new javax.swing.JPanel();
         lblSalesPredictionByCat = new javax.swing.JLabel();
         panelSalesPredictionByCat = new javax.swing.JScrollPane();
@@ -169,8 +176,8 @@ public class DP2 extends javax.swing.JFrame {
         txtSalesIncreaseByProd = new javax.swing.JTextField();
         panelSalesPredictionByProd = new javax.swing.JScrollPane();
         btnUpdatePredictionByProd = new javax.swing.JButton();
-        monthComboBox = new javax.swing.JComboBox<>();
-        yearComboBox = new javax.swing.JComboBox<>();
+        monthComboBox = new javax.swing.JComboBox<String>();
+        yearComboBox = new javax.swing.JComboBox<String>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -298,6 +305,11 @@ public class DP2 extends javax.swing.JFrame {
         });
 
         btnInventoryReport.setText("Inventory Report");
+        btnInventoryReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInventoryReportActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -632,14 +644,19 @@ public class DP2 extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        saleReportMonthComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select Month--", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        saleReportMonthComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select Month--", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
         saleReportMonthComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saleReportMonthComboBoxActionPerformed(evt);
             }
         });
 
-        saleReportYearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select Year--" }));
+        saleReportYearComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select Year--" }));
+        saleReportYearComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saleReportYearComboBoxActionPerformed(evt);
+            }
+        });
 
         lblMonthlySaleReport.setText("MONTHLY SALE REPORT");
 
@@ -704,15 +721,86 @@ public class DP2 extends javax.swing.JFrame {
                 .addContainerGap(47, Short.MAX_VALUE))
         );
 
+        lblWeeklySaleReport.setText("WEEKLY SALE REPORT");
+
+        saleReportWeekComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select Week--" }));
+        saleReportWeekComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saleReportWeekComboBoxActionPerformed(evt);
+            }
+        });
+
+        saleReportWeekYearComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select Year--" }));
+        saleReportWeekYearComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saleReportWeekYearComboBoxActionPerformed(evt);
+            }
+        });
+
+        btnShowWeeklyReport.setText("Display");
+        btnShowWeeklyReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowWeeklyReportActionPerformed(evt);
+            }
+        });
+
+        btnPrintWeeklyReport.setText("Print to File");
+        btnPrintWeeklyReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintWeeklyReportActionPerformed(evt);
+            }
+        });
+
+        btnWeeklyReportBack.setText("Back");
+        btnWeeklyReportBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnWeeklyReportBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout weeklySaleReportLayout = new javax.swing.GroupLayout(weeklySaleReport);
         weeklySaleReport.setLayout(weeklySaleReportLayout);
         weeklySaleReportLayout.setHorizontalGroup(
             weeklySaleReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 641, Short.MAX_VALUE)
+            .addGroup(weeklySaleReportLayout.createSequentialGroup()
+                .addGroup(weeklySaleReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(weeklySaleReportLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblWeeklySaleReport))
+                    .addGroup(weeklySaleReportLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(weeklySaleReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(saleReportWeekYearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(saleReportWeekComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(weeklySaleReportLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnShowWeeklyReport)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnPrintWeeklyReport)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnWeeklyReportBack))
+                    .addGroup(weeklySaleReportLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(weeklyReportPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(325, Short.MAX_VALUE))
         );
         weeklySaleReportLayout.setVerticalGroup(
             weeklySaleReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(weeklySaleReportLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblWeeklySaleReport)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(saleReportWeekComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(saleReportWeekYearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(weeklySaleReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnShowWeeklyReport)
+                    .addComponent(btnPrintWeeklyReport)
+                    .addComponent(btnWeeklyReportBack))
+                .addGap(18, 18, 18)
+                .addComponent(weeklyReportPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         lblSalesPredictionByCat.setText("Sales Prediction - by Category");
@@ -750,14 +838,14 @@ public class DP2 extends javax.swing.JFrame {
             }
         });
 
-        monthComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select Month--", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        monthComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select Month--", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
         monthComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 monthComboBoxActionPerformed(evt);
             }
         });
 
-        yearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select Year--" }));
+        yearComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select Year--" }));
 
         javax.swing.GroupLayout predictionPanelLayout = new javax.swing.GroupLayout(predictionPanel);
         predictionPanel.setLayout(predictionPanelLayout);
@@ -1222,7 +1310,8 @@ public class DP2 extends javax.swing.JFrame {
         mainPanel.setVisible(false);
         monthlySaleReport.setVisible(true);
     }//GEN-LAST:event_btnMonthlyReportActionPerformed
-
+    
+    
     private void monthComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_monthComboBoxActionPerformed
@@ -1370,6 +1459,7 @@ public class DP2 extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnMonthlyReportBackActionPerformed
 
+    
     private void btnPrintMonthlyReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintMonthlyReportActionPerformed
         try {
             Report report = new Report();
@@ -1405,8 +1495,105 @@ public class DP2 extends javax.swing.JFrame {
         weeklySaleReport.add(new JLabel("Testtttt"));
         getContentPane().validate();
         getContentPane().repaint();
-        showMessage("Clicked");
+        mainPanel.setVisible(false);
+        weeklySaleReport.setVisible(true);
     }//GEN-LAST:event_btnWeeklyReportActionPerformed
+
+    private void btnShowWeeklyReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowWeeklyReportActionPerformed
+        Report report = new Report();
+        
+
+        if (saleReportWeekComboBox.getSelectedIndex() == 0) {
+            showMessage("Please select Week");
+            return;
+        }
+
+        if (saleReportWeekYearComboBox.getSelectedIndex() == 0) {
+            showMessage("Please select year");
+            return;
+        }
+
+        String week = saleReportWeekComboBox.getSelectedItem().toString();
+        String year = saleReportWeekYearComboBox.getSelectedItem().toString();
+
+        List<String[]> data = report.retrieveWeeklyDatabase(week, year);
+        
+        if (data.isEmpty()) {
+            showMessage("No data for selected week and year");
+            weeklyReportPanel.setVisible(false);
+            return;
+        }
+        
+        String[] columnNames = {"Sales ID", "Product ID", "Qty", "Price", "SaleDate"};
+        JTable table = new JTable(data.toArray(new Object[][]{}), columnNames);
+        weeklyReportPanel.getViewport().add(table);
+        weeklyReportPanel.setVisible(true);
+        getContentPane().validate();
+        getContentPane().repaint();
+    }//GEN-LAST:event_btnShowWeeklyReportActionPerformed
+
+    private void btnPrintWeeklyReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintWeeklyReportActionPerformed
+        try {
+            Report report = new Report();
+            
+            if (saleReportWeekComboBox.getSelectedIndex() == 0) {
+                showMessage("Please select month");
+                return;
+            }
+            
+            if (saleReportWeekYearComboBox.getSelectedIndex() == 0) {
+                showMessage("Please select Week");
+                return;
+            }
+            
+            String week = saleReportWeekComboBox.getSelectedItem().toString();
+            String year = saleReportWeekYearComboBox.getSelectedItem().toString();
+            List<String[]> data = report.retrieveWeeklyDatabase(week, year);
+            if (data.isEmpty()) {
+                showMessage("No data for selected week and year");
+                return;
+            }
+            report.weeklyReport(week, year);
+            showMessage("Weekly report created");
+        } catch (IOException ex) {
+            Logger.getLogger(DP2.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DP2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnPrintWeeklyReportActionPerformed
+
+    private void btnWeeklyReportBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWeeklyReportBackActionPerformed
+        weeklySaleReport.setVisible(false);
+        mainPanel.setVisible(true);
+        
+    }//GEN-LAST:event_btnWeeklyReportBackActionPerformed
+
+    private void saleReportWeekComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saleReportWeekComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saleReportWeekComboBoxActionPerformed
+
+    private void saleReportWeekYearComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saleReportWeekYearComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saleReportWeekYearComboBoxActionPerformed
+
+    private void saleReportYearComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saleReportYearComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saleReportYearComboBoxActionPerformed
+
+    private void btnInventoryReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryReportActionPerformed
+  
+        try {
+            Report report = new Report();
+             
+           report.inventoryReport();
+           showMessage("Inventory Report Created");
+        } catch (IOException ex) {
+            Logger.getLogger(DP2.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DP2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnInventoryReportActionPerformed
 
     private boolean isDateString(String s) {
         try {
@@ -1552,15 +1739,18 @@ public class DP2 extends javax.swing.JFrame {
     private javax.swing.JButton btnMonthlyReport;
     private javax.swing.JButton btnMonthlyReportBack;
     private javax.swing.JButton btnPrintMonthlyReport;
+    private javax.swing.JButton btnPrintWeeklyReport;
     private javax.swing.JButton btnSalePrediction;
     private javax.swing.JButton btnSaleSearch;
     private javax.swing.JButton btnSaleSearchBack;
     private javax.swing.JButton btnSaleSearchPanel;
     private javax.swing.JButton btnShowMonthlyReport;
+    private javax.swing.JButton btnShowWeeklyReport;
     private javax.swing.JButton btnStockAlertWarning;
     private javax.swing.JButton btnUpdatePredictionByCat;
     private javax.swing.JButton btnUpdatePredictionByProd;
     private javax.swing.JButton btnWeeklyReport;
+    private javax.swing.JButton btnWeeklyReportBack;
     private javax.swing.JPanel editSalePanel;
     private javax.swing.JPanel inventoryPanel;
     private javax.swing.JLabel jLabel1;
@@ -1586,6 +1776,7 @@ public class DP2 extends javax.swing.JFrame {
     private javax.swing.JLabel lblSalesIncreaseByProd;
     private javax.swing.JLabel lblSalesPredictionByCat;
     private javax.swing.JLabel lblSalesPredictionByProd;
+    private javax.swing.JLabel lblWeeklySaleReport;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JComboBox<String> monthComboBox;
     private javax.swing.JScrollPane monthlyReportPanel;
@@ -1595,6 +1786,8 @@ public class DP2 extends javax.swing.JFrame {
     private javax.swing.JScrollPane panelSalesPredictionByProd;
     private javax.swing.JPanel predictionPanel;
     private javax.swing.JComboBox<String> saleReportMonthComboBox;
+    private javax.swing.JComboBox<String> saleReportWeekComboBox;
+    private javax.swing.JComboBox<String> saleReportWeekYearComboBox;
     private javax.swing.JComboBox<String> saleReportYearComboBox;
     private javax.swing.JPanel saleSearchPanel;
     private javax.swing.JTextField txtAddProductId;
@@ -1610,6 +1803,7 @@ public class DP2 extends javax.swing.JFrame {
     private javax.swing.JTextField txtSalesIncreaseByProd;
     private javax.swing.JTextField txtSearchProdId;
     private javax.swing.JTextField txtSearchSaleId;
+    private javax.swing.JScrollPane weeklyReportPanel;
     private javax.swing.JPanel weeklySaleReport;
     private javax.swing.JComboBox<String> yearComboBox;
     // End of variables declaration//GEN-END:variables
