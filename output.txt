@@ -2,58 +2,28 @@ Monthly Report
 -----------------------------------------
 Sales
 -----------------------------------------
-Sales ID: 221676741632
-Product ID: 94993211
+Sales ID: 406354188585
+Product ID: 17310173
 Qty: 1
-Price: 5.39
-SaleDate: 24/08/2016
-Sales ID: 226472363101
-Product ID: 55769950
+Price: 5.95
+SaleDate: 20/04/2016
+Sales ID: 406354188585
+Product ID: 91721174
 Qty: 1
-Price: 19.99
-SaleDate: 21/06/2016
-Sales ID: 248538281698
+Price: 5.95
+SaleDate: 20/04/2016
+Sales ID: 834133946536
+Product ID: 14326397
+Qty: 1
+Price: 7.99
+SaleDate: 25/04/2016
+Sales ID: 834133946536
 Product ID: 42239102
-Qty: 5
-Price: 14.95
-SaleDate: 31/12/2016
-Sales ID: 248538281698
-Product ID: 73436518
-Qty: 1
-Price: 29.99
-SaleDate: 31/12/2016
-Sales ID: 249154427405
-Product ID: 69714312
-Qty: 1
-Price: 2.49
-SaleDate: 13/07/2016
-Sales ID: 249154427405
-Product ID: 77510083
-Qty: 1
-Price: 3.99
-SaleDate: 13/07/2016
-Sales ID: 547230383915
-Product ID: 80803940
-Qty: 1
-Price: 69.99
-SaleDate: 16/06/2016
-Sales ID: 614111329546
-Product ID: 11249800
 Qty: 2
-Price: 59.98
-SaleDate: 11/12/2016
-Sales ID: 694654601899
-Product ID: 55979102
-Qty: 1
-Price: 18.99
-SaleDate: 18/08/2016
-Sales ID: 715134119242
-Product ID: 53231685
-Qty: 1
-Price: 9.99
-SaleDate: 10/06/2016
-Sales ID: 715134119242
-Product ID: 77510083
-Qty: 1
-Price: 3.99
-SaleDate: 10/06/2016
+Price: 2.99
+SaleDate: 25/04/2016
+Sales ID: 834133946536
+Product ID: 92219372
+Qty: 3
+Price: 1.99
+SaleDate: 25/04/2016

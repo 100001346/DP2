@@ -285,4 +285,16 @@ public class SaleJpaController implements Serializable
         return rs;
     }
     
+    public List<Sale> getSaleByMonthAndYear(String month, String year) {
+        EntityManager em = getEntityManager();
+        String query =  "SELECT s "
+                +       "FROM Sale s "
+                +       "WHERE func('month', s.saleDate) = :saleMonth "
+                +       "AND func('year', s.saleDate) = :saleYear";
+        return em.createQuery(query)
+                .setParameter("saleMonth", month)
+                .setParameter("saleYear", year)
+                .getResultList();
+    }
+    
 }
