@@ -74,7 +74,7 @@ public class DP2 extends javax.swing.JFrame {
         editSalePanel.setVisible(false);
         outOfStockPanel.setVisible(false);
         predictionPanel.setVisible(false);
-//        weeklySaleReport.setVisible(false);
+        weeklySaleReport.setVisible(false);
         monthlySaleReport.setVisible(false);
         inventoryPanel.setVisible(false);
         addYearsToComboBox(yearComboBox);
