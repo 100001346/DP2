@@ -241,7 +241,8 @@ public class SaleJpaController implements Serializable {
         String query = "SELECT s "
                 + "FROM Sale s "
                 + "WHERE func('month', s.saleDate) = :saleMonth "
-                + "AND func('year', s.saleDate) = :saleYear";
+                + "AND func('year', s.saleDate) = :saleYear "
+                + "ORDER BY s.saleDate ASC";
         return em.createQuery(query)
                 .setParameter("saleMonth", month)
                 .setParameter("saleYear", year)
@@ -253,7 +254,8 @@ public class SaleJpaController implements Serializable {
         String query = "SELECT s "
                 + "FROM Sale s "
                 + "WHERE func('week', s.saleDate) = :saleWeek "
-                + "AND func('year', s.saleDate) = :saleYear";
+                + "AND func('year', s.saleDate) = :saleYear "
+                + "ORDER BY s.saleDate ASC";
         return em.createQuery(query)
                 .setParameter("saleWeek", week)
                 .setParameter("saleYear", year)

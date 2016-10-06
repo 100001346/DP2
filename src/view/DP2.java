@@ -145,8 +145,8 @@ public class DP2 extends javax.swing.JFrame {
         btnInvAlertBack = new javax.swing.JButton();
         inventoryPanel = new javax.swing.JPanel();
         monthlySaleReport = new javax.swing.JPanel();
-        saleReportMonthComboBox = new javax.swing.JComboBox<>();
-        saleReportYearComboBox = new javax.swing.JComboBox<>();
+        saleReportMonthComboBox = new javax.swing.JComboBox<String>();
+        saleReportYearComboBox = new javax.swing.JComboBox<String>();
         lblMonthlySaleReport = new javax.swing.JLabel();
         btnShowMonthlyReport = new javax.swing.JButton();
         btnPrintMonthlyReport = new javax.swing.JButton();
@@ -154,8 +154,8 @@ public class DP2 extends javax.swing.JFrame {
         btnMonthlyReportBack = new javax.swing.JButton();
         weeklySaleReport = new javax.swing.JPanel();
         lblWeeklySaleReport = new javax.swing.JLabel();
-        saleReportWeekComboBox = new javax.swing.JComboBox<>();
-        saleReportWeekYearComboBox = new javax.swing.JComboBox<>();
+        saleReportWeekComboBox = new javax.swing.JComboBox<String>();
+        saleReportWeekYearComboBox = new javax.swing.JComboBox<String>();
         btnShowWeeklyReport = new javax.swing.JButton();
         btnPrintWeeklyReport = new javax.swing.JButton();
         weeklyReportPanel = new javax.swing.JScrollPane();
@@ -172,8 +172,8 @@ public class DP2 extends javax.swing.JFrame {
         txtSalesIncreaseByProd = new javax.swing.JTextField();
         panelSalesPredictionByProd = new javax.swing.JScrollPane();
         btnUpdatePredictionByProd = new javax.swing.JButton();
-        monthComboBox = new javax.swing.JComboBox<>();
-        yearComboBox = new javax.swing.JComboBox<>();
+        monthComboBox = new javax.swing.JComboBox<String>();
+        yearComboBox = new javax.swing.JComboBox<String>();
         saleInputFromFilePanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtSaleInputFileName = new javax.swing.JTextField();
@@ -657,14 +657,14 @@ public class DP2 extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        saleReportMonthComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select Month--", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        saleReportMonthComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select Month--", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
         saleReportMonthComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saleReportMonthComboBoxActionPerformed(evt);
             }
         });
 
-        saleReportYearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select Year--" }));
+        saleReportYearComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select Year--" }));
         saleReportYearComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saleReportYearComboBoxActionPerformed(evt);
@@ -736,14 +736,14 @@ public class DP2 extends javax.swing.JFrame {
 
         lblWeeklySaleReport.setText("WEEKLY SALE REPORT");
 
-        saleReportWeekComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select Week--" }));
+        saleReportWeekComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select Week--", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52" }));
         saleReportWeekComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saleReportWeekComboBoxActionPerformed(evt);
             }
         });
 
-        saleReportWeekYearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select Year--" }));
+        saleReportWeekYearComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select Year--", "2016" }));
         saleReportWeekYearComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saleReportWeekYearComboBoxActionPerformed(evt);
@@ -851,14 +851,14 @@ public class DP2 extends javax.swing.JFrame {
             }
         });
 
-        monthComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select Month--", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        monthComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select Month--", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
         monthComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 monthComboBoxActionPerformed(evt);
             }
         });
 
-        yearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select Year--" }));
+        yearComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Select Year--" }));
 
         javax.swing.GroupLayout predictionPanelLayout = new javax.swing.GroupLayout(predictionPanel);
         predictionPanel.setLayout(predictionPanelLayout);
